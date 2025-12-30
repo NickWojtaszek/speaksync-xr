@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeakSync WebRTC Test Client (Simulated Phone)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #e2e8f0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #f1f5f9;
+        }
+        
+        .subtitle {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+        
+        input[type="text"],
+        input[type="url"] {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            color: #e2e8f0;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        input[type="text"]:focus,
+        input[type="url"]:focus {
+            outline: none;
+            border-color: #a78bfa;
+            background: rgba(30, 41, 59, 0.8);
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+        }
+        
+        button {
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        button:hover:not(:disabled) {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .button-group button {
+            flex: 1;
+        }
+        
+        .status-box {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .status-indicator.disconnected {
+            background: #ef4444;
+        }
+        
+        .status-indicator.connecting {
+            background: #f97316;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .status-indicator.connected {
+            background: #22c55e;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .log-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(71, 85, 105, 0.3);
+            border-radius: 6px;
+            padding: 12px;
+            height: 250px;
+            overflow-y: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            color: #cbd5e1;
+            margin-top: 15px;
+        }
+        
+        .log-entry {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .log-entry.error {
+            color: #fca5a5;
+        }
+        
+        .log-entry.success {
+            color: #86efac;
+        }
+        
+        .log-entry.info {
+            color: #93c5fd;
+        }
+        
+        .log-entry.warning {
+            color: #fbbf24;
+        }
+        
+        .log-entry time {
+            color: #64748b;
+            margin-right: 8px;
+        }
+        
+        .divider {
+            height: 1px;
+            background: rgba(71, 85, 105, 0.3);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎙️ WebRTC Test Client</h1>
+        <p class="subtitle">Simulates Android phone connection to test the signaling server</p>
+        
+        <div class="form-group">
+            <label for="serverUrl">Signaling Server URL:</label>
+            <input type="url" id="serverUrl" value="ws://localhost:8080" placeholder="ws://localhost:8080">
+        </div>
+        
+        <div class="form-group">
+            <label for="roomCode">Room Code:</label>
+            <input type="text" id="roomCode" placeholder="Enter room code from web app">
+        </div>
+        
+        <div class="button-group">
+            <button onclick="connectToRoom()" id="connectBtn">Connect to Room</button>
+            <button onclick="disconnect()" id="disconnectBtn" disabled>Disconnect</button>
+        </div>
+        
+        <div class="status-box">
+            <div>
+                <span class="status-indicator disconnected" id="statusIndicator"></span>
+                <strong>Status:</strong> <span id="statusText">Disconnected</span>
+            </div>
+            <div style="margin-top: 8px; font-size: 12px; color: #94a3b8;">
+                <div>Client ID: <code id="clientId">-</code></div>
+                <div>Paired: <code id="pairedStatus">No</code></div>
+                <div>WebRTC State: <code id="rtcState">-</code></div>
+            </div>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div>
+            <label>Connection Log:</label>
+            <div class="log-box" id="logBox"></div>
+        </div>
+    </div>
+
+    <script>
+        let ws = null;
+        let clientId = null;
+        let peerConnection = null;
+        let roomCode = null;
+        const RTCConfig = {
+            iceServers: [
+                { urls: 'stun:stun.l.google.com:19302' },
+                { urls: 'stun:stun1.l.google.com:19302' }
+            ]
+        };
+
+        function log(message, type = 'info') {
+            const logBox = document.getElementById('logBox');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            const time = new Date().toLocaleTimeString();
+            entry.innerHTML = `<time>${time}</time>${message}`;
+            logBox.appendChild(entry);
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        function updateStatus(status, indicator) {
+            document.getElementById('statusText').textContent = status;
+            const ind = document.getElementById('statusIndicator');
+            ind.className = `status-indicator ${indicator}`;
+        }
+
+        function updateDetails() {
+            document.getElementById('clientId').textContent = clientId || '-';
+            document.getElementById('rtcState').textContent = peerConnection?.connectionState || '-';
+        }
+
+        async function connectToRoom() {
+            roomCode = document.getElementById('roomCode').value.trim();
+            const serverUrl = document.getElementById('serverUrl').value.trim();
+
+            if (!roomCode) {
+                log('Error: Please enter a room code', 'error');
+                return;
+            }
+
+            if (!serverUrl) {
+                log('Error: Please enter a server URL', 'error');
+                return;
+            }
+
+            document.getElementById('connectBtn').disabled = true;
+            updateStatus('Connecting to signaling server...', 'connecting');
+            log(`Connecting to ${serverUrl}...`);
+
+            try {
+                ws = new WebSocket(serverUrl);
+                
+                ws.onopen = () => {
+                    log('✓ Connected to signaling server', 'success');
+                    const joinMsg = {
+                        type: 'join',
+                        roomCode: roomCode,
+                        deviceType: 'android'
+                    };
+                    ws.send(JSON.stringify(joinMsg));
+                    log(`Joining room: ${roomCode}`, 'info');
+                };
+
+                ws.onmessage = async (event) => {
+                    const msg = JSON.parse(event.data);
+                    log(`← Received: ${msg.type}`, 'info');
+
+                    switch (msg.type) {
+                        case 'join':
+                            if (msg.clientId) {
+                                clientId = msg.clientId;
+                                updateDetails();
+                                log(`✓ Joined room. Client ID: ${clientId}`, 'success');
+                                if (msg.paired) {
+                                    document.getElementById('pairedStatus').textContent = 'Yes';
+                                    log('✓ Paired with web client! Creating offer...', 'success');
+                                    await createAndSendOffer();
+                                } else {
+                                    updateStatus('Waiting for web client to connect...', 'connecting');
+                                    log('Waiting for web client to join room...', 'warning');
+                                }
+                            }
+                            break;
+
+                        case 'status':
+                            if (msg.paired) {
+                                document.getElementById('pairedStatus').textContent = 'Yes';
+                                log('✓ Web client connected! Creating offer...', 'success');
+                                if (!peerConnection) {
+                                    await createAndSendOffer();
+                                }
+                            }
+                            break;
+
+                        case 'offer':
+                            log('Received offer from web client', 'info');
+                            await handleOffer(msg.payload);
+                            break;
+
+                        case 'answer':
+                            log('Received answer from web client', 'info');
+                            await handleAnswer(msg.payload);
+                            break;
+
+                        case 'ice-candidate':
+                            log('Received ICE candidate', 'info');
+                            await handleIceCandidate(msg.payload);
+                            break;
+
+                        case 'error':
+                            log(`Error: ${msg.error}`, 'error');
+                            break;
+
+                        default:
+                            log(`Unknown message type: ${msg.type}`, 'warning');
+                    }
+                };
+
+                ws.onerror = (error) => {
+                    log(`WebSocket error: ${error.message || error}`, 'error');
+                    updateStatus('Connection Error', 'disconnected');
+                };
+
+                ws.onclose = () => {
+                    log('Disconnected from signaling server', 'warning');
+                    updateStatus('Disconnected', 'disconnected');
+                    document.getElementById('connectBtn').disabled = false;
+                    document.getElementById('disconnectBtn').disabled = true;
+                    if (peerConnection) {
+                        peerConnection.close();
+                        peerConnection = null;
+                    }
+                };
+            } catch (error) {
+                log(`Connection failed: ${error.message}`, 'error');
+                updateStatus('Disconnected', 'disconnected');
+                document.getElementById('connectBtn').disabled = false;
+            }
+        }
+
+        async function createAndSendOffer() {
+            try {
+                if (peerConnection) {
+                    peerConnection.close();
+                }
+
+                peerConnection = new RTCPeerConnection(RTCConfig);
+                log('Created RTCPeerConnection', 'info');
+
+                // Request microphone access and add audio track
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true,
+                            sampleRate: 16000
+                        }
+                    });
+                    
+                    for (const track of stream.getTracks()) {
+                        peerConnection.addTrack(track, stream);
+                    }
+                    log('✓ Microphone audio track added', 'success');
+                } catch (err) {
+                    log(`Warning: Could not access microphone (${err.message}). Connection may not stay open.`, 'warning');
+                }
+
+                peerConnection.onconnectionstatechange = () => {
+                    log(`WebRTC connection state: ${peerConnection.connectionState}`, 'info');
+                    updateDetails();
+                    
+                    if (peerConnection.connectionState === 'connected') {
+                        updateStatus('Connected', 'connected');
+                        log('✓ WebRTC connection established!', 'success');
+                    } else if (peerConnection.connectionState === 'failed') {
+                        updateStatus('Connection Failed', 'disconnected');
+                        log('WebRTC connection failed', 'error');
+                    }
+                };
+
+                peerConnection.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        ws.send(JSON.stringify({
+                            type: 'ice-candidate',
+                            roomCode: roomCode,
+                            fromClientId: clientId,
+                            payload: {
+                                candidate: event.candidate.candidate,
+                                sdpMLineIndex: event.candidate.sdpMLineIndex,
+                                sdpMid: event.candidate.sdpMid
+                            }
+                        }));
+                        log('Sent ICE candidate', 'info');
+                    }
+                };
+
+                const offer = await peerConnection.createOffer();
+                await peerConnection.setLocalDescription(offer);
+
+                ws.send(JSON.stringify({
+                    type: 'offer',
+                    roomCode: roomCode,
+                    fromClientId: clientId,
+                    payload: {
+                        type: offer.type,
+                        sdp: offer.sdp
+                    }
+                }));
+                log('Sent offer to web client', 'success');
+                updateStatus('Waiting for answer...', 'connecting');
+
+            } catch (error) {
+                log(`Failed to create offer: ${error.message}`, 'error');
+            }
+        }
+
+        async function handleOffer(payload) {
+            try {
+                if (peerConnection) {
+                    peerConnection.close();
+                }
+
+                peerConnection = new RTCPeerConnection(RTCConfig);
+                log('Created RTCPeerConnection for offer response', 'info');
+
+                // Request microphone access and add audio track
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ 
+                        audio: {
+                            echoCancellation: true,
+                            noiseSuppression: true,
+                            autoGainControl: true,
+                            sampleRate: 16000
+                        }
+                    });
+                    
+                    for (const track of stream.getTracks()) {
+                        peerConnection.addTrack(track, stream);
+                    }
+                    log('✓ Microphone audio track added', 'success');
+                } catch (err) {
+                    log(`Warning: Could not access microphone (${err.message}). Connection may not stay open.`, 'warning');
+                }
+
+                peerConnection.onconnectionstatechange = () => {
+                    log(`WebRTC connection state: ${peerConnection.connectionState}`, 'info');
+                    updateDetails();
+                    
+                    if (peerConnection.connectionState === 'connected') {
+                        updateStatus('Connected', 'connected');
+                        log('✓ WebRTC connection established!', 'success');
+                    } else if (peerConnection.connectionState === 'failed') {
+                        updateStatus('Connection Failed', 'disconnected');
+                        log('WebRTC connection failed', 'error');
+                    }
+                };
+
+                peerConnection.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        ws.send(JSON.stringify({
+                            type: 'ice-candidate',
+                            roomCode: roomCode,
+                            fromClientId: clientId,
+                            payload: {
+                                candidate: event.candidate.candidate,
+                                sdpMLineIndex: event.candidate.sdpMLineIndex,
+                                sdpMid: event.candidate.sdpMid
+                            }
+                        }));
+                        log('Sent ICE candidate', 'info');
+                    }
+                };
+
+                await peerConnection.setRemoteDescription(new RTCSessionDescription({
+                    type: payload.type,
+                    sdp: payload.sdp
+                }));
+
+                const answer = await peerConnection.createAnswer();
+                await peerConnection.setLocalDescription(answer);
+
+                ws.send(JSON.stringify({
+                    type: 'answer',
+                    roomCode: roomCode,
+                    fromClientId: clientId,
+                    payload: {
+                        type: answer.type,
+                        sdp: answer.sdp
+                    }
+                }));
+                log('Sent answer to web client', 'success');
+                updateStatus('Waiting for connection...', 'connecting');
+
+            } catch (error) {
+                log(`Failed to handle offer: ${error.message}`, 'error');
+            }
+        }
+
+        async function handleAnswer(payload) {
+            try {
+                await peerConnection.setRemoteDescription(new RTCSessionDescription({
+                    type: payload.type,
+                    sdp: payload.sdp
+                }));
+                log('Set remote description from answer', 'success');
+                updateStatus('Establishing connection...', 'connecting');
+            } catch (error) {
+                log(`Failed to handle answer: ${error.message}`, 'error');
+            }
+        }
+
+        async function handleIceCandidate(payload) {
+            try {
+                await peerConnection.addIceCandidate(new RTCIceCandidate({
+                    candidate: payload.candidate,
+                    sdpMLineIndex: payload.sdpMLineIndex,
+                    sdpMid: payload.sdpMid
+                }));
+            } catch (error) {
+                log(`Failed to add ICE candidate: ${error.message}`, 'error');
+            }
+        }
+
+        function disconnect() {
+            if (ws) {
+                ws.close();
+            }
+            if (peerConnection) {
+                peerConnection.close();
+                peerConnection = null;
+            }
+            clientId = null;
+            document.getElementById('connectBtn').disabled = false;
+            document.getElementById('disconnectBtn').disabled = true;
+            document.getElementById('pairedStatus').textContent = 'No';
+            updateStatus('Disconnected', 'disconnected');
+            log('Disconnected', 'warning');
+        }
+
+        // Enable disconnect button when WebSocket is connected
+        setInterval(() => {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                document.getElementById('disconnectBtn').disabled = false;
+            }
+        }, 100);
+    </script>
+</body>
+</html>

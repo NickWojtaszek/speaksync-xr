@@ -1,0 +1,9 @@
+{
+  "name": "SpeakSync XR",
+  "description": "A powerful report creation tool that combines a template manager with real-time speech-to-text transcription. Load templates and dictate your reports directly at the cursor position.",
+  "requestFramePermissions": [
+    "microphone",
+    "clipboard-read"
+  ],
+  "prompt": ""
+}

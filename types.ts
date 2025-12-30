@@ -215,12 +215,15 @@ export type UserProfile = TemplateData & StudyData & SettingsData;
 
 // User Authentication Types
 export type UserRole = 'radiologist' | 'verifier' | 'accounting' | 'teaching';
+export type LoginMethod = 'google' | 'microsoft' | 'password';
 
 export interface User {
   id: string;
   name: string;
   email?: string;
   role: UserRole;
+  profileCompleted?: boolean;
+  loginMethod?: LoginMethod;
 }
 
 export interface AuthData {

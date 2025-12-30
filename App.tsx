@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LanguageProvider, useTranslations } from './context/LanguageContext';
 import { SupabaseAuthProvider, useSupabaseAuth } from './context/SupabaseAuthContext';
+import { AuthProvider } from './context/AuthContext';
 import { AppContextProvider } from './context/AppContext';
 import { TemplateProvider } from './context/TemplateContext';
 import { SettingsProvider } from './context/SettingsContext';
@@ -265,7 +266,9 @@ const App: React.FC = () => {
             <ThemeProvider>
                 <GlobalThemeStyles>
                     <LanguageProvider>
-                        <AuthWrapper />
+                        <AuthProvider>
+                            <AuthWrapper />
+                        </AuthProvider>
                     </LanguageProvider>
                 </GlobalThemeStyles>
             </ThemeProvider>

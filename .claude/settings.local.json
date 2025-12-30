@@ -8,7 +8,11 @@
       "Bash(npm install:*)",
       "Bash(ls:*)",
       "Bash(curl:*)",
-      "Bash(xargs cat:*)"
+      "Bash(xargs cat:*)",
+      "Bash(docker --version:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)"
     ]
   }
 }

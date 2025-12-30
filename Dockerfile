@@ -26,10 +26,11 @@ COPY package*.json ./
 # Install all dependencies (vite is needed for preview server)
 RUN npm ci
 
-# Copy built assets from builder
+# Copy built assets and necessary config files from builder
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/vite.config.ts ./vite.config.ts
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
+COPY --from=builder /app/index.html ./index.html
 
 # Expose port (Railway will set PORT env var)
 EXPOSE $PORT

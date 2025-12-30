@@ -7,9 +7,9 @@ README.md
 .env.local
 .env.production
 .env.*.local
-dist
 *.md
 .vscode
 .idea
 *.log
 .DS_Store
+.claude

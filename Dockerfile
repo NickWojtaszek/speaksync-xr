@@ -32,9 +32,12 @@ COPY --from=builder /app/vite.config.ts ./vite.config.ts
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY --from=builder /app/index.html ./index.html
 
+# Copy startup script
+COPY start.sh ./start.sh
+RUN chmod +x ./start.sh
+
 # Expose port (Railway will set PORT env var)
 EXPOSE $PORT
 
-# Start the preview server
-# vite.config.ts already configures host and port from env vars
-CMD ["npm", "run", "preview"]
+# Start the preview server with debug script
+CMD ["./start.sh"]

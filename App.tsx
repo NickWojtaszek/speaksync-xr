@@ -11,6 +11,7 @@ import { ReportProvider } from './context/ReportContext';
 import { TeachingCaseProvider } from './context/TeachingCaseContext';
 import { GlobalThemeStyles } from './components/GlobalThemeStyles';
 import ErrorBoundary from './components/ErrorBoundary';
+import { checkEnvironment } from './utils/checkEnv';
 
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
@@ -22,6 +23,9 @@ import CaseViewerPage from './pages/CaseViewerPage';
 import { AuthDemo } from './pages/AuthDemo';
 
 import { useApp } from './context/AppContext';
+
+// Check environment on load
+checkEnvironment();
 
 
 // The new AppContent component is a clean router.

@@ -71,21 +71,16 @@ export function useStorage<T>(
         .from(tableName)
         .select(columnName)
         .eq('user_id', uid)
-        .single();
+        .maybeSingle();
 
-      if (error && error.code !== 'PGRST116') { // PGRST116 = no rows
+      if (error) {
         console.error('Error loading from Supabase:', error);
         return;
       }
 
       if (result && result[columnName]) {
-        // Check if it's the specific key or full settings object
-        const supabaseData = result[columnName];
-        if (typeof supabaseData === 'object' && key in supabaseData) {
-          setData(supabaseData[key]);
-        } else {
-          setData(supabaseData);
-        }
+        // Data is stored directly in the column
+        setData(result[columnName]);
       }
     } catch (err) {
       console.error('Failed to load from Supabase:', err);
@@ -107,7 +102,7 @@ export function useStorage<T>(
           .from(tableName)
           .upsert({
             user_id: userId,
-            [columnName]: { [key]: newValue },
+            [columnName]: newValue,
             updated_at: new Date().toISOString(),
           });
 
@@ -118,7 +113,7 @@ export function useStorage<T>(
         console.error('Failed to save to Supabase:', err);
       }
     }
-  }, [userId, data, key, tableName, columnName, setLocalData]);
+  }, [userId, data, tableName, columnName, setLocalData]);
 
   return [data, setValue, loading];
 }

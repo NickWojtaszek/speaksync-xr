@@ -35,6 +35,6 @@ COPY --from=builder /app/index.html ./index.html
 # Expose port (Railway will set PORT env var)
 EXPOSE $PORT
 
-# Start the preview server with explicit host binding
-# Railway provides PORT env var which vite.config.ts will use
-CMD ["sh", "-c", "npm run preview -- --host 0.0.0.0 --port ${PORT:-3000}"]
+# Start the preview server
+# vite.config.ts already configures host and port from env vars
+CMD ["npm", "run", "preview"]

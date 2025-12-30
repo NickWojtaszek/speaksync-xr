@@ -1,1 +1,1 @@
-web: npm start
+web: ./debug-start.sh

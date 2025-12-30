@@ -30,8 +30,12 @@ RUN npm ci
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/server.js ./server.js
 
+# Copy debug startup script
+COPY debug-start.sh ./debug-start.sh
+RUN chmod +x ./debug-start.sh
+
 # Expose port (Railway will set PORT env var)
 EXPOSE $PORT
 
-# Use serve to host static files
-CMD ["npm", "start"]
+# Use debug startup script
+CMD ["./debug-start.sh"]

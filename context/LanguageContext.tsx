@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, useState, useCallback } from 'react';
 import type { CustomCommand } from '../types';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useStorage } from '../hooks/useStorage';
 
 export const supportedLanguages = {
   pl: {
@@ -1058,7 +1058,12 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useLocalStorage<Language>('speaksync_language', 'pl');
+  const [language, setLanguage, languageLoading] = useStorage<Language>(
+    'speaksync_language',
+    'pl',
+    'user_preferences',
+    'language'
+  );
   const translations = useMemo(() => allTranslations[language], [language]);
 
   const t = useCallback((key: string, replacementsOrdefaultValue?: { [key: string]: string | number } | string): string => {

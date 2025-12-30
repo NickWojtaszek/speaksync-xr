@@ -1,13 +1,48 @@
 import React, { createContext, useContext, useState } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useStorage } from '../hooks/useStorage';
 import type { Report, VerificationRecord, ReportContextType, ReportEntry, AccountingProcessing, AccountingStatus, InternalNote } from '../types';
 
 const ReportContext = createContext<ReportContextType | undefined>(undefined);
 
+interface ReportData {
+  reports: Report[];
+  verifications: VerificationRecord[];
+  accounting: AccountingProcessing[];
+}
+
+const initialReportData: ReportData = {
+  reports: [],
+  verifications: [],
+  accounting: []
+};
+
 export const ReportProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [reports, setReports] = useLocalStorage<Report[]>('speaksync_reports', []);
-  const [verificationRecords, setVerificationRecords] = useLocalStorage<VerificationRecord[]>('speaksync_verifications', []);
-  const [accountingProcessing, setAccountingProcessing] = useLocalStorage<AccountingProcessing[]>('speaksync_accounting', []);
+  const [reportData, setReportData, reportsLoading] = useStorage<ReportData>(
+    'speaksync_reports',
+    initialReportData,
+    'reports_data',
+    'data'
+  );
+
+  // Extract individual arrays for backward compatibility
+  const reports = reportData.reports;
+  const verificationRecords = reportData.verifications;
+  const accountingProcessing = reportData.accounting;
+
+  // Helper to update reports array
+  const setReports = (newReports: Report[]) => {
+    setReportData(prev => ({ ...prev, reports: newReports }));
+  };
+
+  // Helper to update verifications array
+  const setVerificationRecords = (newVerifications: VerificationRecord[]) => {
+    setReportData(prev => ({ ...prev, verifications: newVerifications }));
+  };
+
+  // Helper to update accounting array
+  const setAccountingProcessing = (newAccounting: AccountingProcessing[]) => {
+    setReportData(prev => ({ ...prev, accounting: newAccounting }));
+  };
 
   // Generate content hash for entries to detect exact duplicates
   const generateContentHash = (numerBadania: string, opis: string, dataWykonania: string, kwota: number): string => {

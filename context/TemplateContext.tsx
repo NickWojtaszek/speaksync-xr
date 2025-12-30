@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useMemo, useEffect, useCall
 import type { AppData, Template, StudyType, Scenario, TemplateData } from '../types';
 import { initialStudyTypes, initialScenarios } from '../data/templateData';
 import { systemTemplates } from '../data/systemTemplates';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useStorage } from '../hooks/useStorage';
 import { useAuth } from './AuthContext';
 import { useTranslations } from './LanguageContext';
 import { useApp } from './AppContext';
@@ -48,7 +48,12 @@ export const TemplateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const { currentUser } = useAuth();
     const { language, t } = useTranslations();
     const { setConfirmationState, closeConfirmation } = useApp();
-    const [data, setData] = useLocalStorage<TemplateData>(`speaksync_templates_${currentUser?.id}`, initialTemplateData);
+    const [data, setData, templatesLoading] = useStorage<TemplateData>(
+        'speaksync_templates',
+        initialTemplateData,
+        'templates',
+        'data'
+    );
     
     const [currentStudyFilter, setCurrentStudyFilter] = useState<StudyType | null>(null);
     const [currentScenarioFilter, setCurrentScenarioFilter] = useState<Scenario | null>(null);

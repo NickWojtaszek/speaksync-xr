@@ -135,6 +135,98 @@ CREATE OR REPLACE VIEW active_teaching_cases AS
 SELECT * FROM teaching_cases
 WHERE is_deleted = FALSE OR is_deleted IS NULL;
 
+-- Templates Table (for cross-device sync)
+CREATE TABLE IF NOT EXISTS templates (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(user_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_templates_user_id ON templates(user_id);
+
+-- Studies Table (for cross-device sync)
+CREATE TABLE IF NOT EXISTS studies (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(user_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_studies_user_id ON studies(user_id);
+
+-- Reports Data Table (for cross-device sync - combines reports, verifications, accounting)
+CREATE TABLE IF NOT EXISTS reports_data (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(user_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_reports_data_user_id ON reports_data(user_id);
+
+-- User Preferences Table (language, theme, etc.)
+CREATE TABLE IF NOT EXISTS user_preferences (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  language TEXT NOT NULL DEFAULT 'en',
+  theme_id TEXT,
+  microphone_source TEXT,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(user_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_user_preferences_user_id ON user_preferences(user_id);
+
+-- Enable Row Level Security on new tables
+ALTER TABLE templates ENABLE ROW LEVEL SECURITY;
+ALTER TABLE studies ENABLE ROW LEVEL SECURITY;
+ALTER TABLE reports_data ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_preferences ENABLE ROW LEVEL SECURITY;
+
+-- RLS Policies for Templates
+CREATE POLICY "Users can view own templates" ON templates
+  FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own templates" ON templates
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update own templates" ON templates
+  FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Users can delete own templates" ON templates
+  FOR DELETE USING (auth.uid() = user_id);
+
+-- RLS Policies for Studies
+CREATE POLICY "Users can view own studies" ON studies
+  FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own studies" ON studies
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update own studies" ON studies
+  FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Users can delete own studies" ON studies
+  FOR DELETE USING (auth.uid() = user_id);
+
+-- RLS Policies for Reports Data
+CREATE POLICY "Users can view own reports data" ON reports_data
+  FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own reports data" ON reports_data
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update own reports data" ON reports_data
+  FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Users can delete own reports data" ON reports_data
+  FOR DELETE USING (auth.uid() = user_id);
+
+-- RLS Policies for User Preferences
+CREATE POLICY "Users can view own preferences" ON user_preferences
+  FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own preferences" ON user_preferences
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update own preferences" ON user_preferences
+  FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Users can delete own preferences" ON user_preferences
+  FOR DELETE USING (auth.uid() = user_id);
+
 -- Grant permissions (adjust as needed for your Railway setup)
 -- GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO your_app_user;
 -- GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO your_app_user;

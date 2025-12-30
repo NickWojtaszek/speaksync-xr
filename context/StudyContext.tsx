@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useCallback, useEffect } from 'react';
 import type { Study, PersonalInfo, RadiologyCode, GeneratedReport, StudyData, PlanStatus } from '../types';
 import { initialRadiologyCodes } from '../data/radiologyCodes';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useStorage } from '../hooks/useStorage';
 import { useAuth } from './AuthContext';
 import { useApp } from './AppContext';
 import { useTranslations } from './LanguageContext';
@@ -39,7 +39,12 @@ export const StudyProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const { currentUser } = useAuth();
     const { setConfirmationState, closeConfirmation } = useApp();
     const { t } = useTranslations();
-    const [data, setData] = useLocalStorage<StudyData>(`speaksync_studies_${currentUser?.id}`, initialStudyData);
+    const [data, setData, studiesLoading] = useStorage<StudyData>(
+        'speaksync_studies',
+        initialStudyData,
+        'studies',
+        'data'
+    );
 
     // Sync missing hardcoded codes to ensure updates in data/radiologyCodes.ts are visible 
     // even if local storage already has a codes list.

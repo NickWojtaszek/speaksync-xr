@@ -12,7 +12,19 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Build the application
+# Accept build arguments for Vite environment variables
+ARG VITE_SUPABASE_URL
+ARG VITE_SUPABASE_ANON_KEY
+ARG VITE_DEV_BADGES
+ARG GEMINI_API_KEY
+
+# Set them as environment variables for the build
+ENV VITE_SUPABASE_URL=$VITE_SUPABASE_URL
+ENV VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY
+ENV VITE_DEV_BADGES=$VITE_DEV_BADGES
+ENV GEMINI_API_KEY=$GEMINI_API_KEY
+
+# Build the application (Vite will embed VITE_* vars)
 RUN npm run build
 
 # Production stage

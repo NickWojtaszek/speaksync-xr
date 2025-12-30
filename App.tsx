@@ -1,6 +1,7 @@
 import React from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { SupabaseAuthProvider } from './context/SupabaseAuthContext';
 import { AppContextProvider } from './context/AppContext';
 import { TemplateProvider } from './context/TemplateContext';
 import { SettingsProvider } from './context/SettingsContext';
@@ -18,6 +19,7 @@ import InterestingCasesLibrary from './pages/InterestingCasesLibrary';
 import AccountingPage from './pages/AccountingPage';
 import AIConfigurationPage from './pages/AIConfigurationPage';
 import CaseViewerPage from './pages/CaseViewerPage';
+import { AuthDemo } from './pages/AuthDemo';
 
 import { useApp } from './context/AppContext';
 
@@ -56,6 +58,12 @@ const AppContent: React.FC = () => {
             return (
                 <ErrorBoundary resetKeys={[view]}>
                     <CaseViewerPage />
+                </ErrorBoundary>
+            );
+        case 'authdemo':
+            return (
+                <ErrorBoundary resetKeys={[view]}>
+                    <AuthDemo />
                 </ErrorBoundary>
             );
         case 'main':
@@ -97,15 +105,17 @@ const AuthWrapper: React.FC = () => {
 // It sets up the top-level providers for Authentication, Language, and Theme.
 const App: React.FC = () => {
     return (
-        <ThemeProvider>
-            <GlobalThemeStyles>
-                <LanguageProvider>
-                    <AuthProvider>
-                        <AuthWrapper />
-                    </AuthProvider>
-                </LanguageProvider>
-            </GlobalThemeStyles>
-        </ThemeProvider>
+        <SupabaseAuthProvider>
+            <ThemeProvider>
+                <GlobalThemeStyles>
+                    <LanguageProvider>
+                        <AuthProvider>
+                            <AuthWrapper />
+                        </AuthProvider>
+                    </LanguageProvider>
+                </GlobalThemeStyles>
+            </ThemeProvider>
+        </SupabaseAuthProvider>
     );
 };
 

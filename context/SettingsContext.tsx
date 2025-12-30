@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useCallback, useEffect } from 'react';
 import type { CustomCommand, AIPromptConfig, ColorSettings, InterestingCase, SettingsData, LayoutDensity, HotkeysConfig, StyleExample, AISettings } from '../types';
 import { initialAIPromptConfigs } from '../data/promptData';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useStorage } from '../hooks/useStorage';
 import { useAuth } from './AuthContext';
 import { useApp } from './AppContext';
 import { useTranslations } from './LanguageContext';
@@ -62,7 +62,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const { currentUser } = useAuth();
     const { language, t } = useTranslations();
     const { setConfirmationState, closeConfirmation } = useApp();
-    const [data, setData] = useLocalStorage<SettingsData>(`speaksync_settings_${currentUser?.id}`, initialSettingsData);
+    const [data, setData, loading] = useStorage<SettingsData>(
+        'speaksync_settings',
+        initialSettingsData,
+        'user_settings',
+        'settings'
+    );
 
     const setCustomCommands = (newCommands: CustomCommand[]) => {
         setData(prev => ({ ...prev, customCommands: newCommands }));

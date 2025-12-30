@@ -1,7 +1,6 @@
 import React from 'react';
 import { LanguageProvider } from './context/LanguageContext';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import { SupabaseAuthProvider } from './context/SupabaseAuthContext';
+import { SupabaseAuthProvider, useSupabaseAuth } from './context/SupabaseAuthContext';
 import { AppContextProvider } from './context/AppContext';
 import { TemplateProvider } from './context/TemplateContext';
 import { SettingsProvider } from './context/SettingsContext';
@@ -101,8 +100,23 @@ const AuthenticatedApp: React.FC = () => (
 
 // A component to handle the authentication check.
 const AuthWrapper: React.FC = () => {
-    const { currentUser } = useAuth();
-    return currentUser ? <AuthenticatedApp /> : <LoginPage />;
+    const { user, loading } = useSupabaseAuth();
+
+    if (loading) {
+        return (
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '100vh',
+                color: '#a78bfa'
+            }}>
+                Loading...
+            </div>
+        );
+    }
+
+    return user ? <AuthenticatedApp /> : <LoginPage />;
 };
 
 // The root App component.
@@ -113,9 +127,7 @@ const App: React.FC = () => {
             <ThemeProvider>
                 <GlobalThemeStyles>
                     <LanguageProvider>
-                        <AuthProvider>
-                            <AuthWrapper />
-                        </AuthProvider>
+                        <AuthWrapper />
                     </LanguageProvider>
                 </GlobalThemeStyles>
             </ThemeProvider>

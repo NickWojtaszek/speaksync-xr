@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google OAuth Test - SpeakSync XR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-8">
+    <div class="max-w-2xl w-full">
+        <h1 class="text-3xl font-bold mb-6 text-center text-purple-400">Google OAuth Integration Test</h1>
+
+        <div class="bg-gray-800 rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Test Instructions</h2>
+            <ol class="list-decimal list-inside space-y-2 text-gray-300">
+                <li>Ensure you've configured Google OAuth in Supabase Dashboard</li>
+                <li>Click the "Test Google Sign-In" button below</li>
+                <li>Sign in with your Google account</li>
+                <li>After redirect, check the "Test Results" section below</li>
+            </ol>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+            <div class="space-y-3">
+                <button id="testGoogleBtn" class="w-full px-6 py-3 bg-white hover:bg-gray-100 text-gray-900 font-semibold rounded-lg transition-colors flex items-center justify-center gap-3">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Test Google Sign-In
+                </button>
+
+                <button id="checkSessionBtn" class="w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors">
+                    Check Current Session
+                </button>
+
+                <button id="signOutBtn" class="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors">
+                    Sign Out
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Test Results</h2>
+            <div id="results" class="space-y-2 font-mono text-sm">
+                <p class="text-gray-400">No tests run yet. Click a button above to start.</p>
+            </div>
+        </div>
+
+        <div class="mt-6 text-center">
+            <a href="http://localhost:3003" class="text-purple-400 hover:text-purple-300 underline">
+                ← Back to Main App
+            </a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+        // Get Supabase credentials from environment (you'll need to replace these)
+        const SUPABASE_URL = localStorage.getItem('VITE_SUPABASE_URL') || 'https://pssngtmbbaeprnjusyhw.supabase.co';
+        const SUPABASE_ANON_KEY = localStorage.getItem('VITE_SUPABASE_ANON_KEY') || 'YOUR_ANON_KEY_HERE';
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const resultsDiv = document.getElementById('results');
+
+        function logResult(message, type = 'info') {
+            const colors = {
+                info: 'text-blue-400',
+                success: 'text-green-400',
+                error: 'text-red-400',
+                warning: 'text-yellow-400'
+            };
+
+            const p = document.createElement('p');
+            p.className = colors[type];
+            p.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            resultsDiv.appendChild(p);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+
+        function clearResults() {
+            resultsDiv.innerHTML = '';
+        }
+
+        // Test Google Sign-In
+        document.getElementById('testGoogleBtn').addEventListener('click', async () => {
+            clearResults();
+            logResult('Starting Google OAuth test...', 'info');
+
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: window.location.origin + '/test-oauth.html'
+                    }
+                });
+
+                if (error) {
+                    logResult(`❌ Error: ${error.message}`, 'error');
+                    logResult(`Error details: ${JSON.stringify(error)}`, 'error');
+                } else {
+                    logResult('✅ Redirecting to Google...', 'success');
+                    logResult('You should be redirected to Google sign-in page', 'info');
+                }
+            } catch (err) {
+                logResult(`❌ Exception: ${err.message}`, 'error');
+            }
+        });
+
+        // Check Current Session
+        document.getElementById('checkSessionBtn').addEventListener('click', async () => {
+            clearResults();
+            logResult('Checking current session...', 'info');
+
+            try {
+                const { data: { session }, error } = await supabase.auth.getSession();
+
+                if (error) {
+                    logResult(`❌ Error: ${error.message}`, 'error');
+                } else if (session) {
+                    logResult('✅ Session found!', 'success');
+                    logResult(`User ID: ${session.user.id}`, 'info');
+                    logResult(`Email: ${session.user.email}`, 'info');
+                    logResult(`Provider: ${session.user.app_metadata.provider}`, 'info');
+                    logResult(`Created: ${new Date(session.user.created_at).toLocaleString()}`, 'info');
+                    logResult(`Session expires: ${new Date(session.expires_at * 1000).toLocaleString()}`, 'info');
+
+                    if (session.user.user_metadata) {
+                        logResult('User Metadata:', 'info');
+                        logResult(JSON.stringify(session.user.user_metadata, null, 2), 'info');
+                    }
+                } else {
+                    logResult('⚠️ No active session. Please sign in.', 'warning');
+                }
+            } catch (err) {
+                logResult(`❌ Exception: ${err.message}`, 'error');
+            }
+        });
+
+        // Sign Out
+        document.getElementById('signOutBtn').addEventListener('click', async () => {
+            clearResults();
+            logResult('Signing out...', 'info');
+
+            try {
+                const { error } = await supabase.auth.signOut();
+
+                if (error) {
+                    logResult(`❌ Error: ${error.message}`, 'error');
+                } else {
+                    logResult('✅ Signed out successfully', 'success');
+                }
+            } catch (err) {
+                logResult(`❌ Exception: ${err.message}`, 'error');
+            }
+        });
+
+        // Check for OAuth callback on page load
+        window.addEventListener('load', async () => {
+            const hash = window.location.hash;
+            if (hash && hash.includes('access_token')) {
+                logResult('OAuth callback detected!', 'success');
+                logResult('Checking session...', 'info');
+
+                // Wait a moment for Supabase to process the callback
+                setTimeout(async () => {
+                    const { data: { session }, error } = await supabase.auth.getSession();
+                    if (session) {
+                        logResult('✅ Google sign-in successful!', 'success');
+                        logResult(`Welcome ${session.user.email}!`, 'success');
+                        document.getElementById('checkSessionBtn').click();
+                    } else if (error) {
+                        logResult(`❌ Error processing callback: ${error.message}`, 'error');
+                    }
+                }, 1000);
+            }
+        });
+
+        // Log configuration on load
+        logResult(`Supabase URL: ${SUPABASE_URL}`, 'info');
+        logResult(`Supabase configured: ${SUPABASE_ANON_KEY !== 'YOUR_ANON_KEY_HERE' ? 'Yes' : 'No'}`,
+                  SUPABASE_ANON_KEY !== 'YOUR_ANON_KEY_HERE' ? 'success' : 'warning');
+
+        if (SUPABASE_ANON_KEY === 'YOUR_ANON_KEY_HERE') {
+            logResult('⚠️ WARNING: Supabase anon key not configured!', 'warning');
+            logResult('Add your key to .env.local as VITE_SUPABASE_ANON_KEY', 'warning');
+        }
+    </script>
+</body>
+</html>

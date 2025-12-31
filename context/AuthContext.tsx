@@ -17,9 +17,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Bridge function: Map Supabase user to app User
   const currentUser: User | null = user ? {
     id: user.id,
-    name: extractNameFromEmail(user.email || ''),
+    name: user.user_metadata?.full_name || user.user_metadata?.name || extractNameFromEmail(user.email || ''),
     email: user.email || undefined,
     role: 'radiologist' as UserRole, // Temporary default - will be replaced with profile data
+    loginMethod: user.app_metadata?.provider === 'google' ? 'google' : 'password',
   } : null;
 
   const logout = async () => {

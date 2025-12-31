@@ -104,6 +104,8 @@ export function useStorage<T>(
             user_id: userId,
             [columnName]: newValue,
             updated_at: new Date().toISOString(),
+          }, {
+            onConflict: 'user_id'
           });
 
         if (error) {

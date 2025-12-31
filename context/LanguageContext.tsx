@@ -1064,7 +1064,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     'user_preferences',
     'language'
   );
-  const translations = useMemo(() => allTranslations[language], [language]);
+
+  // Ensure language is always valid, fallback to 'pl' if undefined
+  const safeLanguage = (language && language in supportedLanguages) ? language : 'pl';
+  const translations = useMemo(() => allTranslations[safeLanguage], [safeLanguage]);
 
   const t = useCallback((key: string, replacementsOrdefaultValue?: { [key: string]: string | number } | string): string => {
     const keys = key.split('.');
@@ -1100,8 +1103,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     return key;
   }, [translations]);
-  
-  const value = { language, setLanguage, t, supportedLanguages };
+
+  const value = { language: safeLanguage, setLanguage, t, supportedLanguages };
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 };

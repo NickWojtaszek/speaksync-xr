@@ -82,22 +82,40 @@ const AppContent: React.FC = () => {
 };
 
 
+// Sync Supabase user to local AuthContext
+const AuthSyncBridge: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { user } = useSupabaseAuth();
+    const { currentUser, login } = useAuth();
+
+    React.useEffect(() => {
+        if (user && !currentUser) {
+            // Sync Supabase user to local auth context
+            const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
+            login(name, 'radiologist'); // Default role
+        }
+    }, [user, currentUser, login]);
+
+    return <>{children}</>;
+};
+
 // The main app component after authentication.
 // It wraps all the data providers around the AppContent router.
 const AuthenticatedApp: React.FC = () => (
-    <AppContextProvider>
-        <SettingsProvider>
-            <TemplateProvider>
-                <StudyProvider>
-                    <ReportProvider>
-                        <TeachingCaseProvider>
-                            <AppContent />
-                        </TeachingCaseProvider>
-                    </ReportProvider>
-                </StudyProvider>
-            </TemplateProvider>
-        </SettingsProvider>
-    </AppContextProvider>
+    <AuthSyncBridge>
+        <AppContextProvider>
+            <SettingsProvider>
+                <TemplateProvider>
+                    <StudyProvider>
+                        <ReportProvider>
+                            <TeachingCaseProvider>
+                                <AppContent />
+                            </TeachingCaseProvider>
+                        </ReportProvider>
+                    </StudyProvider>
+                </TemplateProvider>
+            </SettingsProvider>
+        </AppContextProvider>
+    </AuthSyncBridge>
 );
 
 // Inline authentication component

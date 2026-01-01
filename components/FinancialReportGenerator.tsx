@@ -81,8 +81,8 @@ const FinancialReportGenerator: React.FC = () => {
       const amount = report.totalAmount || report.entries.reduce((sum, e) => sum + (e?.kwota || 0), 0);
       if (!userMap[report.userId]) {
         userMap[report.userId] = {
-          name: report.userName,
-          email: report.userEmail,
+          name: report.userName || 'Unknown User',
+          email: report.userEmail || 'unknown@email.com',
           count: 0,
           totalAmount: 0
         };
@@ -120,8 +120,8 @@ const FinancialReportGenerator: React.FC = () => {
       byCode: Object.values(codeMap).sort((a, b) => b.count - a.count),
       detailedReports: filteredReports.map(r => ({
         reportId: r.id,
-        userName: r.userName,
-        userEmail: r.userEmail,
+        userName: r.userName || 'Unknown User',
+        userEmail: r.userEmail || 'unknown@email.com',
         month: r.month,
         year: r.year,
         amount: r.totalAmount || r.entries.reduce((sum, e) => sum + (e?.kwota || 0), 0),

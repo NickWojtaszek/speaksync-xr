@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useSupabaseAuth } from '../context/SupabaseAuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { LogoutIcon, UserIcon } from './Icons';
 
@@ -13,6 +14,7 @@ const ROLE_INFO: Record<string, { label: string; emoji: string }> = {
 
 const UserMenu: React.FC = () => {
   const { currentUser, logout } = useAuth();
+  const { signOut } = useSupabaseAuth();
   const { currentTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -120,8 +122,13 @@ const UserMenu: React.FC = () => {
 
           {/* Logout Button */}
           <button
-            onClick={() => {
-              logout();
+            onClick={async () => {
+              try {
+                await signOut(); // Sign out from Supabase
+                logout(); // Clear local auth state
+              } catch (error) {
+                console.error('Logout failed:', error);
+              }
               setIsOpen(false);
             }}
             className="w-full flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors hover:bg-opacity-80"

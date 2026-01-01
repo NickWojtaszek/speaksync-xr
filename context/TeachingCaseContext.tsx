@@ -40,7 +40,7 @@ interface TeachingCaseContextType {
 const TeachingCaseContext = createContext<TeachingCaseContextType | undefined>(undefined);
 
 export const TeachingCaseProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { currentUser } = useUserProfile();
+  const { currentUser } = usePINAuth();
   const [cases, setCases] = useState<TeachingCase[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({

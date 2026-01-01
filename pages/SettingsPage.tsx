@@ -3,7 +3,7 @@ import type { CustomCommand, AIPromptConfig, ColorSettings, LayoutDensity } from
 import { TrashIcon, ArrowLeftIcon, ImportIcon, UploadIcon, ChevronDownIcon, SparklesIcon, LogoutIcon, BrainIcon } from '../components/Icons';
 import { radiologyTerms } from '../data/radiologyTerms';
 import { useTranslations } from '../context/LanguageContext';
-import { useUserProfile } from '../hooks/useUserProfile';
+import { usePINAuth } from '../context/PINAuthContext';
 import { useApp } from '../context/AppContext';
 import { useSettings } from '../context/SettingsContext';
 import { useTemplate } from '../context/TemplateContext';
@@ -72,7 +72,7 @@ const ToggleSwitch: React.FC<{
 
 
 const SettingsPage: React.FC = () => {
-  const { currentUser, logout } = useUserProfile();
+  const { currentUser, logout } = usePINAuth();
   const { setView, setConfirmationState, closeConfirmation } = useApp();
   const { currentTheme } = useTheme();
   const {

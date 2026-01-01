@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslations } from '../context/LanguageContext';
-import { useUserProfile } from '../hooks/useUserProfile';
+import { usePINAuth } from '../context/PINAuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useReport } from '../context/ReportContext';
 import { CheckIcon, XIcon, AlertIcon, ChevronDownIcon } from '../components/Icons';
@@ -14,7 +14,7 @@ import AccountingSubmissionModal from './AccountingSubmissionModal';
 
 const VerifierDashboard: React.FC = () => {
   const { t } = useTranslations();
-  const { currentUser } = useUserProfile();
+  const { currentUser } = usePINAuth();
   const { currentTheme } = useTheme();
   const { getSubmittedReports, verifyReport, getVerificationRecord, verificationRecords, createAccountingRecord, getAccountingRecord } = useReport();
 

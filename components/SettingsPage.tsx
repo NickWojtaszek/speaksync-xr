@@ -4,7 +4,7 @@ import type { CustomCommand, AIPromptConfig, LayoutDensity, HotkeysConfig } from
 import { TrashIcon, ArrowLeftIcon, ImportIcon, UploadIcon, ChevronDownIcon, SparklesIcon, LogoutIcon } from './Icons';
 import { radiologyTerms } from '../data/radiologyTerms';
 import { useTranslations } from '../context/LanguageContext';
-import { useUserProfile } from '../hooks/useUserProfile';
+import { usePINAuth } from '../context/PINAuthContext';
 import { useApp } from '../context/AppContext';
 import { useSettings } from '../context/SettingsContext';
 import { useTemplate } from '../context/TemplateContext';
@@ -165,7 +165,7 @@ const HotkeyInput: React.FC<{
 
 
 const SettingsPage: React.FC<SettingsPageProps> = () => {
-  const { currentUser, logout } = useUserProfile();
+  const { currentUser, logout } = usePINAuth();
   const { setView, setConfirmationState, closeConfirmation } = useApp();
   const { 
       customCommands, setCustomCommands, aiPromptConfig, setAiPromptConfig, colorSettings, setColorSettings,

@@ -22,7 +22,7 @@ import { useApp } from '../context/AppContext';
 import { useSettings } from '../context/SettingsContext';
 import { useStudy } from '../context/StudyContext';
 import { useTheme } from '../context/ThemeContext';
-import { useUserProfile } from '../hooks/useUserProfile';
+import { usePINAuth } from '../context/PINAuthContext';
 import { useThemeStyles } from '../hooks/useThemeStyles';
 import type { Template, RadiologyCode } from '../types';
 
@@ -35,7 +35,7 @@ const MainPage: React.FC = () => {
     const { radiologyCodes, setRadiologyCodes, studies, personalInfo, setPersonalInfo, generatedReports, addGeneratedReport, deleteGeneratedReport } = useStudy();
     const themeStyles = useThemeStyles();
     const { currentTheme } = useTheme();
-    const { currentUser } = useUserProfile();
+    const { currentUser } = usePINAuth();
 
     // Verifier only has access to reports
     // Accounting has access to reports & financial reports tabs

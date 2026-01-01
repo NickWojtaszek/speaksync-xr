@@ -36,7 +36,7 @@ const initialStudyData: StudyData = {
 };
 
 export const StudyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { currentUser } = useUserProfile();
+    const { currentUser } = usePINAuth();
     const { setConfirmationState, closeConfirmation } = useApp();
     const { t } = useTranslations();
     const [data, setData, studiesLoading] = useStorage<StudyData>(

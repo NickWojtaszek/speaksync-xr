@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useUserProfile } from '../hooks/useUserProfile';
+import { usePINAuth } from '../context/PINAuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { LogoutIcon, UserIcon } from './Icons';
 
@@ -12,7 +12,7 @@ const ROLE_INFO: Record<string, { label: string; emoji: string }> = {
 };
 
 const UserMenu: React.FC = () => {
-  const { currentUser, logout } = useUserProfile();
+  const { currentUser, logout } = usePINAuth();
   const { currentTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 

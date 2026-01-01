@@ -59,7 +59,7 @@ const initialSettingsData: SettingsData = {
 };
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { currentUser } = useUserProfile();
+    const { currentUser } = usePINAuth();
     const { language, t } = useTranslations();
     const { setConfirmationState, closeConfirmation } = useApp();
     const [data, setData, loading] = useStorage<SettingsData>(

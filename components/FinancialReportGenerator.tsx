@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslations } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { useReport } from '../context/ReportContext';
-import { useUserProfile } from '../hooks/useUserProfile';
+import { usePINAuth } from '../context/PINAuthContext';
 import { ChevronDownIcon } from './Icons';
 import { safeFormatNumber, safeFormatCurrency } from '../utils/formatters';
 
@@ -39,7 +39,7 @@ type ViewMode = 'summary' | 'byUser' | 'byCode' | 'detailed';
 const FinancialReportGenerator: React.FC = () => {
   const { t } = useTranslations();
   const { currentTheme } = useTheme();
-  const { currentUser } = useUserProfile();
+  const { currentUser } = usePINAuth();
   const { verificationRecords, getApprovedReportsForAccounting, getAccountingRecord } = useReport();
 
   const [dateRange, setDateRange] = useState<DateRangeType>('month');

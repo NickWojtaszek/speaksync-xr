@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { useSupabaseAuth } from '../context/SupabaseAuthContext';
+import { useUserProfile } from '../hooks/useUserProfile';
 import { useTheme } from '../context/ThemeContext';
 import { LogoutIcon, UserIcon } from './Icons';
 
@@ -13,8 +12,7 @@ const ROLE_INFO: Record<string, { label: string; emoji: string }> = {
 };
 
 const UserMenu: React.FC = () => {
-  const { currentUser, logout } = useAuth();
-  const { signOut } = useSupabaseAuth();
+  const { currentUser, logout } = useUserProfile();
   const { currentTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -124,8 +122,7 @@ const UserMenu: React.FC = () => {
           <button
             onClick={async () => {
               try {
-                await signOut(); // Sign out from Supabase
-                logout(); // Clear local auth state
+                await logout(); // Now handles both Supabase and local state
               } catch (error) {
                 console.error('Logout failed:', error);
               }

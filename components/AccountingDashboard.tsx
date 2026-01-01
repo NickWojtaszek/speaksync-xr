@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslations } from '../context/LanguageContext';
-import { useAuth } from '../context/AuthContext';
+import { useUserProfile } from '../hooks/useUserProfile';
 import { useTheme } from '../context/ThemeContext';
 import { useReport } from '../context/ReportContext';
 import { ChevronDownIcon, AlertIcon } from '../components/Icons';
@@ -14,7 +14,7 @@ import { initialRadiologyCodes } from '../data/radiologyCodes';
 
 const AccountingDashboard: React.FC = () => {
   const { t } = useTranslations();
-  const { currentUser } = useAuth();
+  const { currentUser } = useUserProfile();
   const { currentTheme } = useTheme();
   const { verificationRecords, getApprovedReportsForAccounting, getAccountingRecord, createAccountingRecord, updateAccountingStatus, addInternalNote, deleteInternalNote } = useReport();
 

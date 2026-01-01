@@ -89,25 +89,6 @@ export interface AIPromptConfig {
   useTNM: boolean;
 }
 
-// AI Provider Configuration
-export type AIProviderType = 'gemini' | 'openai' | 'anthropic' | 'local';
-
-export interface AIProviderConfig {
-  id: string;
-  type: AIProviderType;
-  name: string;
-  apiKey: string;
-  model: string;
-  enabled: boolean;
-  endpoint?: string; // For custom/local endpoints
-}
-
-export interface AISettings {
-  providers: AIProviderConfig[];
-  defaultProvider: string; // ID of default provider
-  promptConfig: AIPromptConfig; // Moved here for better organization
-}
-
 export interface GrammarError {
   id: string;
   originalText: string;
@@ -206,35 +187,20 @@ export interface SettingsData {
   colorSettings: ColorSettings;
   hotkeys: HotkeysConfig;
   aiPromptConfig: { [key in Language]: AIPromptConfig };
-  aiSettings: AISettings; // AI provider configuration
   layoutDensity: LayoutDensity;
   styleExamples: StyleExample[];
 }
 
 export type UserProfile = TemplateData & StudyData & SettingsData;
 
-// User Authentication Types
-export type UserRole = 'radiologist' | 'verifier' | 'accounting' | 'teaching';
-export type LoginMethod = 'google' | 'microsoft' | 'password';
-
-export interface User {
-  id: string;
-  name: string;
-  email?: string;
-  role: UserRole;
-  profileCompleted?: boolean;
-  loginMethod?: LoginMethod;
-}
-
 export interface AuthData {
-  users: User[];
-  currentUser: User | null;
+  users: any[];
+  currentUser: any | null;
 }
 
 // Report Submission System
 export interface ReportEntry {
-  kodNFZ: string; // NFZ code (e.g., "025", "027")
-  numerBadania: string; // Study number / Patient ID
+  numerBadania: string;
   opis: string;
   dataWykonania: string;
   kwota: number;
@@ -264,7 +230,6 @@ export interface Report {
     existingReportId: string;
     existingUserId: string;
     existingUserEmail: string;
-    isCrossUserFraud: boolean; // True if different users submitted same study number
   }[];
 }
 
@@ -323,53 +288,6 @@ export interface ReportContextType {
   addInternalNote: (reportId: string, content: string, userId: string) => void;
   getApprovedReportsForAccounting: () => Report[];
   deleteInternalNote: (reportId: string, noteId: string) => void;
-}
-
-// Teaching Case Library Types
-export type OrganCategory = 'Liver' | 'Brain' | 'Lung' | 'Heart' | 'Kidney' | 'Spine' | 'Abdomen' | 'Chest' | 'Pelvis' | 'Extremities' | 'Vascular' | 'Breast' | 'Head-Neck' | 'MSK' | 'Neuro' | 'Cardiac' | 'GI' | 'GU' | 'Oncology' | 'Other';
-
-export interface DiseaseClassification {
-  organ: OrganCategory;
-  disease: string;
-  confidence: number; // 0-1 range
-}
-
-export interface TeachingCase {
-  id: number;
-  originalReport: string;
-  aiImprovedReport: string | null;
-  finalUserReport: string;
-  organCategory: OrganCategory;
-  diseaseClassification: string | null;
-  diseaseConfidence: number | null;
-  studyNumber: string;
-  patientPesel: string | null;
-  templateId: string | null;
-  templateHeader: string | null;
-  pathologyReport: string | null;
-  uniquenessRating: number | null; // 1-5 star rating
-  createdAt: string; // ISO timestamp
-  authorId: string | null;
-  tags: string | null; // JSON string array
-  notes: string | null;
-}
-
-export interface TeachingCaseInput {
-  originalReport: string;
-  aiImprovedReport?: string;
-  finalUserReport: string;
-  organCategory: OrganCategory;
-  diseaseClassification?: string;
-  diseaseConfidence?: number;
-  studyNumber: string;
-  patientPesel?: string;
-  templateId?: string;
-  templateHeader?: string;
-  pathologyReport?: string;
-  uniquenessRating?: number; // 1-5 star rating
-  authorId?: string;
-  tags?: string[];
-  notes?: string;
 }
 
 declare global {

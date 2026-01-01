@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useTranslations } from '../context/LanguageContext';
-import { useAuth } from '../context/AuthContext';
+import { useUserProfile } from '../hooks/useUserProfile';
 import { useApp } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
 import { useReport } from '../context/ReportContext';
@@ -35,7 +35,7 @@ type ReportView = 'specification' | 'invoice' | 'summary';
 
 const ReportSubmissionPage: React.FC = () => {
   const { t } = useTranslations();
-  const { currentUser } = useAuth();
+  const { currentUser } = useUserProfile();
   const { setView, setConfirmationState, closeConfirmation } = useApp();
   const { currentTheme } = useTheme();
   const { submitReport, getReportsByUser, getVerificationRecord, getAccountingRecord, getDuplicateStudyNumbers } = useReport();

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { LanguageProvider, useTranslations } from './context/LanguageContext';
 import { SupabaseAuthProvider, useSupabaseAuth } from './context/SupabaseAuthContext';
-import { AuthProvider, useAuth } from './context/AuthContext';
 import { AppContextProvider } from './context/AppContext';
 import { TemplateProvider } from './context/TemplateContext';
 import { SettingsProvider } from './context/SettingsContext';
@@ -82,59 +81,22 @@ const AppContent: React.FC = () => {
 };
 
 
-// Sync Supabase user to local AuthContext
-const AuthSyncBridge: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { user } = useSupabaseAuth();
-    const { currentUser, login } = useAuth();
-    const [isReady, setIsReady] = React.useState(false);
-
-    React.useEffect(() => {
-        if (user && !currentUser) {
-            // Sync Supabase user to local auth context
-            const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
-            login(name, 'radiologist'); // Default role
-        } else if (currentUser) {
-            // User already synced
-            setIsReady(true);
-        }
-    }, [user, currentUser, login]);
-
-    // Wait for local user to be synced before rendering app
-    if (!isReady) {
-        return (
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '100vh',
-                color: '#a78bfa'
-            }}>
-                Loading user data...
-            </div>
-        );
-    }
-
-    return <>{children}</>;
-};
-
 // The main app component after authentication.
 // It wraps all the data providers around the AppContent router.
 const AuthenticatedApp: React.FC = () => (
-    <AuthSyncBridge>
-        <AppContextProvider>
-            <SettingsProvider>
-                <TemplateProvider>
-                    <StudyProvider>
-                        <ReportProvider>
-                            <TeachingCaseProvider>
-                                <AppContent />
-                            </TeachingCaseProvider>
-                        </ReportProvider>
-                    </StudyProvider>
-                </TemplateProvider>
-            </SettingsProvider>
-        </AppContextProvider>
-    </AuthSyncBridge>
+    <AppContextProvider>
+        <SettingsProvider>
+            <TemplateProvider>
+                <StudyProvider>
+                    <ReportProvider>
+                        <TeachingCaseProvider>
+                            <AppContent />
+                        </TeachingCaseProvider>
+                    </ReportProvider>
+                </StudyProvider>
+            </TemplateProvider>
+        </SettingsProvider>
+    </AppContextProvider>
 );
 
 // Inline authentication component
@@ -342,9 +304,7 @@ const App: React.FC = () => {
             <ThemeProvider>
                 <GlobalThemeStyles>
                     <LanguageProvider>
-                        <AuthProvider>
-                            <AuthWrapper />
-                        </AuthProvider>
+                        <AuthWrapper />
                     </LanguageProvider>
                 </GlobalThemeStyles>
             </ThemeProvider>

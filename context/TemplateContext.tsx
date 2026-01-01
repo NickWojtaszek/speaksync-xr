@@ -45,7 +45,7 @@ const initialTemplateData: TemplateData = {
 };
 
 export const TemplateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { currentUser } = useAuth();
+    const { currentUser } = useUserProfile();
     const { language, t } = useTranslations();
     const { setConfirmationState, closeConfirmation } = useApp();
     const [data, setData, templatesLoading] = useStorage<TemplateData>(

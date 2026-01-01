@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useReport } from '../context/ReportContext';
 import { ChevronDownIcon, AlertIcon } from '../components/Icons';
+import { safeFormatCurrency } from '../utils/formatters';
 import type { Report, AccountingProcessing } from '../types';
 import Specification from './studyManager/report/Specification';
 import Invoice from './studyManager/report/Invoice';
@@ -172,7 +173,7 @@ const AccountingDashboard: React.FC = () => {
                 {report.userEmail}
               </p>
               <p className="text-sm font-semibold" style={{ color: currentTheme.colors.textPrimary }}>
-                {(totalAmount || 0).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} PLN
+                {safeFormatCurrency(totalAmount)}
               </p>
             </div>
           </div>

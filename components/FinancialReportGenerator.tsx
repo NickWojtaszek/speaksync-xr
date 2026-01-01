@@ -4,6 +4,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useReport } from '../context/ReportContext';
 import { useAuth } from '../context/AuthContext';
 import { ChevronDownIcon } from './Icons';
+import { safeFormatNumber, safeFormatCurrency } from '../utils/formatters';
 
 interface ReportSummary {
   period: string;
@@ -139,19 +140,19 @@ const FinancialReportGenerator: React.FC = () => {
     csvContent += `Financial Report - Period: ${generatedReport.period}\n`;
     csvContent += `Generated: ${new Date().toLocaleString()}\n`;
     csvContent += `Total Reports: ${generatedReport.totalReports}\n`;
-    csvContent += `Total Amount: ${generatedReport.totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} PLN\n\n`;
+    csvContent += `Total Amount: ${safeFormatCurrency(generatedReport.totalAmount)}\n\n`;
 
     if (viewModes.includes('summary')) {
       csvContent += 'SUMMARY\n';
       csvContent += `Total Reports,${generatedReport.totalReports}\n`;
-      csvContent += `Total Amount,${generatedReport.totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\n\n`;
+      csvContent += `Total Amount,${safeFormatNumber(generatedReport.totalAmount)}\n\n`;
     }
 
     if (viewModes.includes('byUser')) {
       csvContent += 'BY USER\n';
       csvContent += 'Name,Email,Count,Total Amount\n';
       generatedReport.byUser.forEach(user => {
-        csvContent += `"${user.name}","${user.email}",${user.count},${user.totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\n`;
+        csvContent += `"${user.name}","${user.email}",${user.count},${safeFormatNumber(user.totalAmount)}\n`;
       });
       csvContent += '\n';
     }
@@ -160,7 +161,7 @@ const FinancialReportGenerator: React.FC = () => {
       csvContent += 'BY CODE\n';
       csvContent += 'Code,Description,Count,Total Amount\n';
       generatedReport.byCode.forEach(code => {
-        csvContent += `"${code.code}","${code.description}",${code.count},${code.totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\n`;
+        csvContent += `"${code.code}","${code.description}",${code.count},${safeFormatNumber(code.totalAmount)}\n`;
       });
       csvContent += '\n';
     }
@@ -169,7 +170,7 @@ const FinancialReportGenerator: React.FC = () => {
       csvContent += 'DETAILED REPORTS\n';
       csvContent += 'User,Email,Month,Year,Amount,Status\n';
       generatedReport.detailedReports.forEach(r => {
-        csvContent += `"${r.userName}","${r.userEmail}",${r.month},${r.year},${r.amount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })},${r.status}\n`;
+        csvContent += `"${r.userName}","${r.userEmail}",${r.month},${r.year},${safeFormatNumber(r.amount)},${r.status}\n`;
       });
     }
 
@@ -364,7 +365,7 @@ const FinancialReportGenerator: React.FC = () => {
                   Total Reports: {generatedReport.totalReports}
                 </p>
                 <p className="text-lg font-bold" style={{ color: currentTheme.colors.textPrimary }}>
-                  Total Amount: {generatedReport.totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} PLN
+                  Total Amount: {safeFormatCurrency(generatedReport.totalAmount)}
                 </p>
               </div>
 
@@ -376,7 +377,7 @@ const FinancialReportGenerator: React.FC = () => {
                   </h4>
                   <div style={{ backgroundColor: currentTheme.colors.bgTertiary }} className="p-3 rounded border border-gray-700 text-sm space-y-1">
                     <p>Total Reports: {generatedReport.totalReports}</p>
-                    <p className="font-semibold">Total Amount: {generatedReport.totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} PLN</p>
+                    <p className="font-semibold">Total Amount: {safeFormatCurrency(generatedReport.totalAmount)}</p>
                   </div>
                 </div>
               )}
@@ -401,7 +402,7 @@ const FinancialReportGenerator: React.FC = () => {
                           <tr key={user.email}>
                             <td className="border border-gray-700 px-2 py-1">{user.name}</td>
                             <td className="border border-gray-700 px-2 py-1 text-center">{user.count}</td>
-                            <td className="border border-gray-700 px-2 py-1 text-right">{user.totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td className="border border-gray-700 px-2 py-1 text-right">{safeFormatNumber(user.totalAmount)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -430,7 +431,7 @@ const FinancialReportGenerator: React.FC = () => {
                           <tr key={code.code}>
                             <td className="border border-gray-700 px-2 py-1">{code.code}</td>
                             <td className="border border-gray-700 px-2 py-1 text-center">{code.count}</td>
-                            <td className="border border-gray-700 px-2 py-1 text-right">{code.totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td className="border border-gray-700 px-2 py-1 text-right">{safeFormatNumber(code.totalAmount)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -460,7 +461,7 @@ const FinancialReportGenerator: React.FC = () => {
                           <tr key={report.reportId}>
                             <td className="border border-gray-700 px-2 py-1">{report.userName}</td>
                             <td className="border border-gray-700 px-2 py-1 text-center">{report.month}/{report.year}</td>
-                            <td className="border border-gray-700 px-2 py-1 text-right">{report.amount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td className="border border-gray-700 px-2 py-1 text-right">{safeFormatNumber(report.amount)}</td>
                             <td className="border border-gray-700 px-2 py-1 text-center text-xs">{report.status.toUpperCase()}</td>
                           </tr>
                         ))}

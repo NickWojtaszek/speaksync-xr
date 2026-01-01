@@ -10,7 +10,6 @@ import { ReportProvider } from './context/ReportContext';
 import { TeachingCaseProvider } from './context/TeachingCaseContext';
 import { GlobalThemeStyles } from './components/GlobalThemeStyles';
 import ErrorBoundary from './components/ErrorBoundary';
-import { checkEnvironment } from './utils/checkEnv';
 
 import MainPage from './pages/MainPage';
 import SettingsPage from './pages/SettingsPage';
@@ -21,9 +20,6 @@ import CaseViewerPage from './pages/CaseViewerPage';
 import LoginPage from './pages/LoginPage';
 
 import { useApp } from './context/AppContext';
-
-// Check environment on load
-checkEnvironment();
 
 
 // The new AppContent component is a clean router.
@@ -60,12 +56,6 @@ const AppContent: React.FC = () => {
             return (
                 <ErrorBoundary resetKeys={[view]}>
                     <CaseViewerPage />
-                </ErrorBoundary>
-            );
-        case 'authdemo':
-            return (
-                <ErrorBoundary resetKeys={[view]}>
-                    <AuthDemo />
                 </ErrorBoundary>
             );
         case 'main':

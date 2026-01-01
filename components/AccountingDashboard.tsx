@@ -172,7 +172,7 @@ const AccountingDashboard: React.FC = () => {
                 {report.userEmail}
               </p>
               <p className="text-sm font-semibold" style={{ color: currentTheme.colors.textPrimary }}>
-                {totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} PLN
+                {(totalAmount || 0).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} PLN
               </p>
             </div>
           </div>

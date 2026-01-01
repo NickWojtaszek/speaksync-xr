@@ -86,14 +86,33 @@ const AppContent: React.FC = () => {
 const AuthSyncBridge: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user } = useSupabaseAuth();
     const { currentUser, login } = useAuth();
+    const [isReady, setIsReady] = React.useState(false);
 
     React.useEffect(() => {
         if (user && !currentUser) {
             // Sync Supabase user to local auth context
             const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User';
             login(name, 'radiologist'); // Default role
+        } else if (currentUser) {
+            // User already synced
+            setIsReady(true);
         }
     }, [user, currentUser, login]);
+
+    // Wait for local user to be synced before rendering app
+    if (!isReady) {
+        return (
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '100vh',
+                color: '#a78bfa'
+            }}>
+                Loading user data...
+            </div>
+        );
+    }
 
     return <>{children}</>;
 };

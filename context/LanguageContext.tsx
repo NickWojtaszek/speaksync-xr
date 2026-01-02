@@ -199,7 +199,7 @@ const pl = {
   },
   "editor": {
     "placeholder": "Wybierz szablon lub zacznij dyktować...",
-    "enhanceAI": "Ulepsz raport z AI",
+    "enhanceAI": "AI",
     "clearText": "Wyczyść tekst",
     "copyText": "Kopiuj cały tekst",
     "pasteText": "Wklej tekst",
@@ -210,7 +210,7 @@ const pl = {
     "aiNoContent": "AI nie zwróciło żadnej treści. Spróbuj ponownie.",
     "aiError": "Wystąpił błąd podczas przetwarzania przez AI. Spróbuj ponownie.",
     "recording": "Nagrywanie...",
-    "pressToTalk": "Naciśnij, aby mówić",
+    "pressToTalk": "Dyktuj",
     "continuousMode": "Tryb ciągły",
     "continuousModeDesc": "Tryb ciągły: automatycznie wznawiaj nagrywanie po pauzie.",
     "correctionMode": "Tryb korekty",

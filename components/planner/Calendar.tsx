@@ -39,12 +39,23 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
             const d = new Date(s.date);
             return d.getFullYear() === year && d.getMonth() === month;
         });
-        
+
+        // Calculate planned points for the month
+        let plannedPoints = 0;
+        Object.entries(plannedDays).forEach(([dateStr, status]) => {
+            const [y, m] = dateStr.split('-').map(Number);
+            if (y === year && m === month + 1) {
+                if (status === 'half') plannedPoints += 1000;
+                else if (status === 'full') plannedPoints += 2000;
+            }
+        });
+
         return {
             count: monthStudies.length,
-            points: monthStudies.reduce((sum, s) => sum + s.points, 0)
+            points: monthStudies.reduce((sum, s) => sum + s.points, 0),
+            plannedPoints
         };
-    }, [studies, currentMonth]);
+    }, [studies, currentMonth, plannedDays]);
 
     const dayStats = useMemo(() => {
         const dateStr = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
@@ -150,6 +161,17 @@ const Calendar: React.FC<CalendarProps> = ({ selectedDate, onSelectDate }) => {
                         <span className="font-bold" style={{ color: currentTheme.colors.textPrimary }}>
                             {monthStats.count} <span className="font-normal text-xs" style={{ color: currentTheme.colors.textSecondary }}>st.</span>
                         </span>
+                        {monthStats.plannedPoints > 0 && (
+                            <>
+                                <span style={{ color: currentTheme.colors.textSecondary }}>|</span>
+                                <span className="font-semibold uppercase text-xs tracking-wider" style={{ color: currentTheme.colors.accentPrimary }}>
+                                    Plan:
+                                </span>
+                                <span className="font-bold" style={{ color: currentTheme.colors.accentPrimary }}>
+                                    {monthStats.plannedPoints.toFixed(0)} <span className="font-normal text-xs" style={{ color: currentTheme.colors.textSecondary }}>pts</span>
+                                </span>
+                            </>
+                        )}
                     </div>
 
                     <button 

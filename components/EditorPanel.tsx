@@ -444,7 +444,12 @@ const EditorPanel: React.FC<EditorPanelProps> = ({
 
       // Save to teaching case library only if user opted in
       if (data.addToLibrary !== false) {
-        await addCase(data);
+        // Only save the final approved report (not original or AI intermediate versions)
+        await addCase({
+          ...data,
+          originalReport: data.finalUserReport,
+          aiImprovedReport: '',  // Don't waste space on intermediate versions
+        });
         console.log('✅ Teaching case saved successfully');
       } else {
         console.log('ℹ️ Skipping teaching library save (routine case)');

@@ -72,7 +72,7 @@ const ToggleSwitch: React.FC<{
 
 
 const SettingsPage: React.FC = () => {
-  const { currentUser, logout } = usePINAuth();
+  const { currentUser, logout, updateUserPin } = usePINAuth();
   const { setView, setConfirmationState, closeConfirmation } = useApp();
   const { currentTheme } = useTheme();
   const {
@@ -90,6 +90,8 @@ const SettingsPage: React.FC = () => {
   const [message, setMessage] = useState<string>('');
   const [isAiConfigOpen, setIsAiConfigOpen] = useState(true);
   const [isTrashOpen, setIsTrashOpen] = useState(false);
+  const [pinInput, setPinInput] = useState<string>('');
+  const [pinError, setPinError] = useState<string>('');
   const vocabFileInputRef = useRef<HTMLInputElement>(null);
   const templateFileInputRef = useRef<HTMLInputElement>(null);
   const texterTemplateFileInputRef = useRef<HTMLInputElement>(null);
@@ -389,6 +391,87 @@ const SettingsPage: React.FC = () => {
                         className="px-4 py-2 text-sm font-semibold rounded-md transition-colors"
                     >{(langData as any).name}</button>
                 ))}
+              </div>
+            </div>
+
+            {/* PIN Management */}
+            <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+              <h2 className="text-xl font-semibold mb-2 text-gray-100">PIN Security</h2>
+              <p className="text-xs text-gray-500 mb-4">
+                {currentUser?.pin ? 'Update or remove your 4-digit PIN' : 'Add a 4-digit PIN to secure your account'}
+              </p>
+
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    {currentUser?.pin ? 'New PIN (4 digits)' : 'PIN (4 digits)'}
+                  </label>
+                  <input
+                    type="password"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    value={pinInput}
+                    onChange={(e) => {
+                      const cleaned = e.target.value.replace(/\D/g, '').slice(0, 4);
+                      setPinInput(cleaned);
+                      setPinError('');
+                    }}
+                    placeholder="••••"
+                    maxLength={4}
+                    className="w-full max-w-xs px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white text-center text-xl tracking-widest placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  />
+                </div>
+
+                {pinError && (
+                  <div className="bg-red-900/20 border border-red-700 rounded-lg p-3">
+                    <p className="text-sm text-red-400">{pinError}</p>
+                  </div>
+                )}
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      if (!pinInput) {
+                        setPinError('Please enter a PIN');
+                        return;
+                      }
+                      if (pinInput.length !== 4) {
+                        setPinError('PIN must be exactly 4 digits');
+                        return;
+                      }
+                      if (!currentUser) return;
+
+                      updateUserPin(currentUser.id, pinInput);
+                      setPinInput('');
+                      setMessage(currentUser.pin ? 'PIN updated successfully' : 'PIN set successfully');
+                      setTimeout(() => setMessage(''), 3000);
+                    }}
+                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors"
+                  >
+                    {currentUser?.pin ? 'Update PIN' : 'Set PIN'}
+                  </button>
+
+                  {currentUser?.pin && (
+                    <button
+                      onClick={() => {
+                        if (!currentUser) return;
+                        updateUserPin(currentUser.id, '');
+                        setPinInput('');
+                        setMessage('PIN removed successfully');
+                        setTimeout(() => setMessage(''), 3000);
+                      }}
+                      className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 font-semibold rounded-lg transition-colors"
+                    >
+                      Remove PIN
+                    </button>
+                  )}
+                </div>
+
+                {currentUser?.pin && (
+                  <p className="text-xs text-gray-500">
+                    Current status: <span className="text-green-400 font-semibold">PIN enabled</span>
+                  </p>
+                )}
               </div>
             </div>
 

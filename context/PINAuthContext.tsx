@@ -62,12 +62,21 @@ export const PINAuthProvider: React.FC<{ children: React.ReactNode }> = ({ child
    * Update user's PIN
    */
   const updateUserPin = useCallback((userId: string, pin: string) => {
-    setAuthData(prevData => ({
-      ...prevData,
-      users: prevData.users.map(user =>
-        user.id === userId ? { ...user, pin } : user
-      ),
-    }));
+    setAuthData(prevData => {
+      const updatedUsers = prevData.users.map(user =>
+        user.id === userId ? { ...user, pin: pin || undefined } : user
+      );
+
+      // If updating current user's PIN, update currentUser as well
+      const updatedCurrentUser = prevData.currentUser?.id === userId
+        ? { ...prevData.currentUser, pin: pin || undefined }
+        : prevData.currentUser;
+
+      return {
+        users: updatedUsers,
+        currentUser: updatedCurrentUser,
+      };
+    });
   }, [setAuthData]);
 
   const value: AuthContextType = {

@@ -3,7 +3,7 @@ import type { AppData, Template, StudyType, Scenario, TemplateData } from '../ty
 import { initialStudyTypes, initialScenarios } from '../data/templateData';
 import { systemTemplates } from '../data/systemTemplates';
 import { useStorage } from '../hooks/useStorage';
-import { useAuth } from './AuthContext';
+import { usePINAuth } from './PINAuthContext';
 import { useTranslations } from './LanguageContext';
 import { useApp } from './AppContext';
 

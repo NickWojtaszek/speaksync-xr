@@ -3,7 +3,7 @@ import React, { createContext, useContext, useCallback, useEffect } from 'react'
 import type { CustomCommand, AIPromptConfig, ColorSettings, InterestingCase, SettingsData, LayoutDensity, HotkeysConfig, StyleExample, AISettings } from '../types';
 import { initialAIPromptConfigs } from '../data/promptData';
 import { useStorage } from '../hooks/useStorage';
-import { useAuth } from './AuthContext';
+import { usePINAuth } from './PINAuthContext';
 import { useApp } from './AppContext';
 import { useTranslations } from './LanguageContext';
 import { initializeAIService } from '../services/aiService';

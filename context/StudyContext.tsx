@@ -3,7 +3,7 @@ import React, { createContext, useContext, useCallback, useEffect } from 'react'
 import type { Study, PersonalInfo, RadiologyCode, GeneratedReport, StudyData, PlanStatus } from '../types';
 import { initialRadiologyCodes } from '../data/radiologyCodes';
 import { useStorage } from '../hooks/useStorage';
-import { useAuth } from './AuthContext';
+import { usePINAuth } from './PINAuthContext';
 import { useApp } from './AppContext';
 import { useTranslations } from './LanguageContext';
 

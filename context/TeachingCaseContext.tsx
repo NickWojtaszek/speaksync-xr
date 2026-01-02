@@ -12,7 +12,7 @@ import {
   exportDatabaseFile,
   importDatabaseFile
 } from '../utils/database';
-import { useAuth } from './AuthContext';
+import { usePINAuth } from './PINAuthContext';
 
 interface TeachingCaseContextType {
   // State

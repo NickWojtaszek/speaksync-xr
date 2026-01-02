@@ -161,7 +161,7 @@ const SubmissionProgressModal: React.FC<SubmissionProgressModalProps> = ({
                                 </div>
                                 <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
                                     <div
-                                        className="h-full bg-gradient-to-r from-purple-600 to-blue-600 transition-all duration-300 ease-out rounded-full"
+                                        className="h-full bg-gradient-to-r from-blue-600 to-blue-600 transition-all duration-300 ease-out rounded-full"
                                         style={{ width: `${Math.min(progress, 100)}%` }}
                                     />
                                 </div>

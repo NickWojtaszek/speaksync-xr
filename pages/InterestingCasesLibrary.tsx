@@ -147,7 +147,7 @@ const InterestingCasesLibrary: React.FC = () => {
               placeholder={t('library.searchPlaceholder')}
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              className="md:col-span-3 w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="md:col-span-3 w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
            {allTags.length > 0 && (
@@ -160,7 +160,7 @@ const InterestingCasesLibrary: React.FC = () => {
                             onClick={() => toggleTag(tag)}
                             className={`px-3 py-1 text-sm rounded-full transition-colors ${
                                 selectedTags.includes(tag)
-                                ? 'bg-purple-500 text-white font-bold' 
+                                ? 'bg-blue-500 text-white font-bold' 
                                 : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                             }`}
                         >{tag}</button>
@@ -172,9 +172,9 @@ const InterestingCasesLibrary: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredCases.length > 0 ? filteredCases.map(c => (
-                <div key={c.id} onClick={() => setSelectedCase(c)} className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 cursor-pointer hover:border-purple-500 transition-colors flex flex-col justify-between">
+                <div key={c.id} onClick={() => setSelectedCase(c)} className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 cursor-pointer hover:border-blue-500 transition-colors flex flex-col justify-between">
                     <div>
-                        <p className="font-bold text-lg text-purple-300">{c.studyNumber}</p>
+                        <p className="font-bold text-lg text-blue-300">{c.studyNumber}</p>
                         <p className="text-sm text-gray-400 mt-1 line-clamp-2">{c.notes || t('library.noNotes')}</p>
                         <div className="flex flex-wrap gap-1 mt-3">
                             {c.tags.slice(0, 5).map(tag => <span key={tag} className="px-2 py-0.5 text-xs rounded-full bg-blue-900/50 text-blue-300">{tag}</span>)}

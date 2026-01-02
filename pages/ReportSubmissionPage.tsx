@@ -266,7 +266,7 @@ const ReportSubmissionPage: React.FC = () => {
                         {accountingRecord && (
                           <span className={`text-xs font-semibold ${
                             accountingRecord.status === 'received' ? 'text-blue-400' :
-                            accountingRecord.status === 'processed' ? 'text-purple-400' :
+                            accountingRecord.status === 'processed' ? 'text-blue-400' :
                             'text-cyan-400'
                           }`}>
                             {accountingRecord.status === 'received' && '📥 Received'}
@@ -355,7 +355,7 @@ const ReportSubmissionPage: React.FC = () => {
                 onClick={() => setActiveView('specification')}
                 className={`px-4 py-3 font-semibold border-b-2 transition-colors ${
                   activeView === 'specification'
-                    ? 'border-purple-500 text-purple-400'
+                    ? 'border-blue-500 text-blue-400'
                     : 'border-transparent text-gray-500 hover:text-gray-400'
                 }`}
               >
@@ -365,7 +365,7 @@ const ReportSubmissionPage: React.FC = () => {
                 onClick={() => setActiveView('invoice')}
                 className={`px-4 py-3 font-semibold border-b-2 transition-colors ${
                   activeView === 'invoice'
-                    ? 'border-purple-500 text-purple-400'
+                    ? 'border-blue-500 text-blue-400'
                     : 'border-transparent text-gray-500 hover:text-gray-400'
                 }`}
               >
@@ -375,7 +375,7 @@ const ReportSubmissionPage: React.FC = () => {
                 onClick={() => setActiveView('summary')}
                 className={`px-4 py-3 font-semibold border-b-2 transition-colors ${
                   activeView === 'summary'
-                    ? 'border-purple-500 text-purple-400'
+                    ? 'border-blue-500 text-blue-400'
                     : 'border-transparent text-gray-500 hover:text-gray-400'
                 }`}
               >
@@ -527,7 +527,7 @@ const ReportSubmissionPage: React.FC = () => {
                     onClick={() => setActiveView('specification')}
                     className={`px-4 py-3 font-semibold border-b-2 transition-colors ${
                       activeView === 'specification'
-                        ? 'border-purple-500 text-purple-400'
+                        ? 'border-blue-500 text-blue-400'
                         : 'border-transparent text-gray-500 hover:text-gray-400'
                     }`}
                   >
@@ -537,7 +537,7 @@ const ReportSubmissionPage: React.FC = () => {
                     onClick={() => setActiveView('invoice')}
                     className={`px-4 py-3 font-semibold border-b-2 transition-colors ${
                       activeView === 'invoice'
-                        ? 'border-purple-500 text-purple-400'
+                        ? 'border-blue-500 text-blue-400'
                         : 'border-transparent text-gray-500 hover:text-gray-400'
                     }`}
                   >
@@ -547,7 +547,7 @@ const ReportSubmissionPage: React.FC = () => {
                     onClick={() => setActiveView('summary')}
                     className={`px-4 py-3 font-semibold border-b-2 transition-colors ${
                       activeView === 'summary'
-                        ? 'border-purple-500 text-purple-400'
+                        ? 'border-blue-500 text-blue-400'
                         : 'border-transparent text-gray-500 hover:text-gray-400'
                     }`}
                   >

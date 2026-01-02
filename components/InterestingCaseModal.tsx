@@ -114,7 +114,7 @@ const InterestingCaseModal: React.FC<InterestingCaseModalProps> = ({ initialCont
           </div>
           <div className="p-4 flex justify-end space-x-3" style={{ borderTopColor: currentTheme.colors.borderColor, borderTopWidth: '1px', backgroundColor: currentTheme.colors.bgSecondary }}>
             <button type="button" onClick={onClose} className="px-4 py-2 rounded-md text-white font-semibold transition-colors" style={{ backgroundColor: currentTheme.colors.bgTertiary }}>{t('templateModal.cancel')}</button>
-            <button type="submit" className="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-md text-white font-semibold transition-colors">{editingCase ? t('templateModal.saveChanges') : t('library.addCase')}</button>
+            <button type="submit" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold transition-colors">{editingCase ? t('templateModal.saveChanges') : t('library.addCase')}</button>
           </div>
         </form>
       </div>

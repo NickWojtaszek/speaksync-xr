@@ -27,7 +27,7 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ children, rightPanel, lef
             >
                 {children}
                 {showBadges && leftLabel && (
-                    <div className="absolute bottom-1 left-2 px-2 py-0.5 text-[11px] font-semibold rounded bg-purple-700 text-white opacity-80 pointer-events-none">
+                    <div className="absolute bottom-1 left-2 px-2 py-0.5 text-[11px] font-semibold rounded bg-blue-700 text-white opacity-80 pointer-events-none">
                         {leftLabel}
                     </div>
                 )}
@@ -42,7 +42,7 @@ const ViewContainer: React.FC<ViewContainerProps> = ({ children, rightPanel, lef
                     </div>
                 )}
                 {showBadges && rightPanel && rightLabel && (
-                    <div className="absolute bottom-1 left-2 px-2 py-0.5 text-[11px] font-semibold rounded bg-purple-700 text-white opacity-80 pointer-events-none">
+                    <div className="absolute bottom-1 left-2 px-2 py-0.5 text-[11px] font-semibold rounded bg-blue-700 text-white opacity-80 pointer-events-none">
                         {rightLabel}
                     </div>
                 )}

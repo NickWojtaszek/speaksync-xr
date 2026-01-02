@@ -348,7 +348,7 @@ const SettingsPage: React.FC = () => {
                     onKeyDown={recording ? handleKeyDown : undefined}
                     className={`px-4 py-2 min-w-[120px] text-center rounded-md border text-sm font-mono transition-all duration-200 ${
                         recording 
-                        ? 'bg-purple-600 border-purple-400 text-white shadow-[0_0_10px_rgba(147,51,234,0.5)] scale-105' 
+                        ? 'bg-blue-600 border-blue-400 text-white shadow-[0_0_10px_rgba(147,51,234,0.5)] scale-105' 
                         : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700 hover:border-gray-500'
                     }`}
                 >
@@ -368,7 +368,7 @@ const SettingsPage: React.FC = () => {
           </button>
           <div className="flex-grow">
             <h1 className="text-3xl font-bold text-white">{t('settings.title')}</h1>
-            <p className="text-sm text-purple-300">{t('settings.loggedInAs', { user: currentUser })}</p>
+            <p className="text-sm text-blue-300">{t('settings.loggedInAs', { user: currentUser })}</p>
           </div>
            <button onClick={logout} className="flex items-center gap-2 p-2 px-4 bg-red-800/50 text-red-300 border border-red-700/50 rounded-md hover:bg-red-800/80 transition-colors">
             <LogoutIcon />
@@ -418,7 +418,7 @@ const SettingsPage: React.FC = () => {
                     }}
                     placeholder="••••"
                     maxLength={4}
-                    className="w-full max-w-xs px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white text-center text-xl tracking-widest placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full max-w-xs px-4 py-2 bg-gray-900/50 border border-gray-600 rounded-lg text-white text-center text-xl tracking-widest placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
 
@@ -446,7 +446,7 @@ const SettingsPage: React.FC = () => {
                       setMessage(currentUser.pin ? 'PIN updated successfully' : 'PIN set successfully');
                       setTimeout(() => setMessage(''), 3000);
                     }}
-                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-colors"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
                   >
                     {currentUser?.pin ? 'Update PIN' : 'Set PIN'}
                   </button>
@@ -525,7 +525,7 @@ const SettingsPage: React.FC = () => {
             <div className="bg-gray-800/50 border border-gray-700 rounded-lg">
                 <button onClick={() => setIsAiConfigOpen(!isAiConfigOpen)} className="w-full flex justify-between items-center p-4 text-left">
                     <div className="flex items-center gap-3">
-                        <SparklesIcon className="h-6 w-6 text-purple-400"/>
+                        <SparklesIcon className="h-6 w-6 text-blue-400"/>
                         <div>
                             <h2 className="text-xl font-semibold text-gray-100">{t('settings.aiConfigTitle')}</h2>
                             <p className="text-xs text-gray-500">{t('settings.aiConfigDesc')}</p>
@@ -536,17 +536,17 @@ const SettingsPage: React.FC = () => {
                 {isAiConfigOpen && (
                     <div className="p-6 border-t border-gray-700 space-y-8">
                         {/* AI Provider Management Button */}
-                        <div className="bg-purple-900/30 border border-purple-700 rounded-lg p-4">
+                        <div className="bg-blue-900/30 border border-blue-700 rounded-lg p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <h3 className="text-lg font-semibold text-purple-300 mb-1">AI Model Configuration</h3>
+                                    <h3 className="text-lg font-semibold text-blue-300 mb-1">AI Model Configuration</h3>
                                     <p className="text-sm text-gray-400">
                                         Configure AI providers (Google Gemini, OpenAI, Anthropic) and manage your API keys
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setView('aiconfig')}
-                                    className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors whitespace-nowrap"
+                                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors whitespace-nowrap"
                                 >
                                     Manage AI Providers
                                 </button>
@@ -583,7 +583,7 @@ const SettingsPage: React.FC = () => {
             <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
               <h2 className="text-xl font-semibold mb-2 text-gray-100">{t('settings.dataManagementTitle')}</h2>
               <div className="space-y-4">
-                <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700"><h3 className="font-semibold text-purple-300 mb-3">{t('settings.templateManagement')}</h3><div className="grid grid-cols-1 sm:grid-cols-3 gap-3"><button onClick={() => texterTemplateFileInputRef.current?.click()} className="w-full flex items-center justify-center p-2 bg-purple-600/20 text-purple-300 border border-purple-500/50 rounded-md hover:bg-purple-600/30 transition-colors"><ImportIcon />{t('settings.importTemplatesJson')}</button><button onClick={() => templateFileInputRef.current?.click()} className="w-full flex items-center justify-center p-2 bg-purple-600/20 text-purple-300 border border-purple-500/50 rounded-md hover:bg-purple-600/30 transition-colors"><ImportIcon />{t('settings.importTemplatesTxt')}</button><button onClick={handleExportTemplates} className="w-full flex items-center justify-center p-2 bg-purple-600/20 text-purple-300 border border-purple-500/50 rounded-md hover:bg-purple-600/30 transition-colors"><UploadIcon />{t('settings.exportTemplatesTxt')}</button></div></div>
+                <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700"><h3 className="font-semibold text-blue-300 mb-3">{t('settings.templateManagement')}</h3><div className="grid grid-cols-1 sm:grid-cols-3 gap-3"><button onClick={() => texterTemplateFileInputRef.current?.click()} className="w-full flex items-center justify-center p-2 bg-blue-600/20 text-blue-300 border border-blue-500/50 rounded-md hover:bg-blue-600/30 transition-colors"><ImportIcon />{t('settings.importTemplatesJson')}</button><button onClick={() => templateFileInputRef.current?.click()} className="w-full flex items-center justify-center p-2 bg-blue-600/20 text-blue-300 border border-blue-500/50 rounded-md hover:bg-blue-600/30 transition-colors"><ImportIcon />{t('settings.importTemplatesTxt')}</button><button onClick={handleExportTemplates} className="w-full flex items-center justify-center p-2 bg-blue-600/20 text-blue-300 border border-blue-500/50 rounded-md hover:bg-blue-600/30 transition-colors"><UploadIcon />{t('settings.exportTemplatesTxt')}</button></div></div>
                 <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700"><h3 className="font-semibold text-green-300 mb-3">{t('settings.vocabularyManagement')}</h3><div className="grid grid-cols-1 sm:grid-cols-3 gap-3"><button onClick={handleImportRadiologyTerms} className="w-full flex items-center justify-center p-2 bg-green-600/20 text-green-300 border border-green-500/50 rounded-md hover:bg-green-600/30 transition-colors"><ImportIcon />{t('settings.importRadiology')}</button><button onClick={() => vocabFileInputRef.current?.click()} className="w-full flex items-center justify-center p-2 bg-green-600/20 text-green-300 border border-green-500/50 rounded-md hover:bg-green-600/30 transition-colors"><ImportIcon />{t('settings.importFromFile')}</button><button onClick={handleExportToFile} className="w-full flex items-center justify-center p-2 bg-green-600/20 text-green-300 border border-green-500/50 rounded-md hover:bg-green-600/30 transition-colors"><UploadIcon />{t('settings.exportToFile')}</button></div></div>
               </div>
               <input type="file" ref={vocabFileInputRef} onChange={handleVocabFileChange} accept=".txt" className="hidden" />
@@ -599,7 +599,7 @@ const SettingsPage: React.FC = () => {
                 </button>
                 {isTrashOpen && (
                     <div className="p-4 border-t border-gray-700">
-                        {deletedFiles.length === 0 ? <p className="text-center text-gray-500 py-4">{t('settings.trash.empty')}</p> : <ul className="space-y-2 max-h-96 overflow-y-auto">{deletedFiles.map(file => (<li key={file.id} className="flex justify-between items-center bg-gray-900/50 p-3 rounded-md"><div><p className="font-semibold text-purple-300">{file.studyNumber}</p><p className="text-xs text-gray-400">{new Date(file.createdAt).toLocaleString()}</p></div><div className="flex gap-2"><button onClick={() => restoreCase(file.id)} className="px-3 py-1 text-sm bg-green-600/50 text-green-300 rounded-md hover:bg-green-600/70">{t('settings.trash.restore')}</button><button onClick={() => permanentlyDeleteCase(file.id)} className="px-3 py-1 text-sm bg-red-600/50 text-red-300 rounded-md hover:bg-red-600/70">{t('settings.trash.delete')}</button></div></li>))}</ul>}
+                        {deletedFiles.length === 0 ? <p className="text-center text-gray-500 py-4">{t('settings.trash.empty')}</p> : <ul className="space-y-2 max-h-96 overflow-y-auto">{deletedFiles.map(file => (<li key={file.id} className="flex justify-between items-center bg-gray-900/50 p-3 rounded-md"><div><p className="font-semibold text-blue-300">{file.studyNumber}</p><p className="text-xs text-gray-400">{new Date(file.createdAt).toLocaleString()}</p></div><div className="flex gap-2"><button onClick={() => restoreCase(file.id)} className="px-3 py-1 text-sm bg-green-600/50 text-green-300 rounded-md hover:bg-green-600/70">{t('settings.trash.restore')}</button><button onClick={() => permanentlyDeleteCase(file.id)} className="px-3 py-1 text-sm bg-red-600/50 text-red-300 rounded-md hover:bg-red-600/70">{t('settings.trash.delete')}</button></div></li>))}</ul>}
                     </div>
                 )}
             </div>
@@ -616,7 +616,7 @@ const SettingsPage: React.FC = () => {
               <div className="space-y-2">
                 {customCommands.map((cmd) => (<div key={cmd.id} className="flex items-center gap-2"><input type="text" value={cmd.spoken} onChange={(e) => handleUpdateCommand(cmd.id, 'spoken', e.target.value)} placeholder={t('settings.spokenCommandPlaceholder')} className="flex-1 p-2 bg-gray-900 border border-gray-600 rounded-md text-sm" /><input type="text" value={cmd.replacement} onChange={(e) => handleUpdateCommand(cmd.id, 'replacement', e.target.value)} placeholder={t('settings.replacementTextPlaceholder')} className="flex-1 p-2 bg-gray-900 border border-gray-600 rounded-md text-sm" /><button onClick={() => handleDeleteCommand(cmd.id)} className="p-2 text-red-400 hover:bg-red-500/20 rounded-full transition-colors"><TrashIcon className="h-5 w-5" /></button></div>))}
               </div>
-              <button onClick={handleAddCommand} className="mt-4 text-purple-300 text-sm font-semibold hover:text-purple-200">{t('settings.addCommand')}</button>
+              <button onClick={handleAddCommand} className="mt-4 text-blue-300 text-sm font-semibold hover:text-blue-200">{t('settings.addCommand')}</button>
             </div>
             )}
         </div>

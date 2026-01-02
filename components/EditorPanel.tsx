@@ -49,7 +49,7 @@ const SelectionToolbar: React.FC<SelectionToolbarProps> = ({ top, left, onCorrec
             <button
                 onClick={onCorrect}
                 disabled={isCorrecting}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm text-white bg-purple-600 hover:bg-purple-700 rounded-md disabled:bg-purple-800 disabled:cursor-wait"
+                className="flex items-center gap-2 px-3 py-1.5 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-md disabled:bg-blue-800 disabled:cursor-wait"
                 title={t('editor.correctSelection')}
             >
                 {isCorrecting ? (
@@ -878,7 +878,7 @@ const EditorPanel: React.FC<EditorPanelProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={handleToggleListen}
-              className={`relative px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 font-semibold ${isListening ? 'bg-red-600 shadow-lg shadow-red-500/50 text-white' : 'bg-purple-600 hover:bg-purple-700 text-white'}`}
+              className={`relative px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 font-semibold ${isListening ? 'bg-red-600 shadow-lg shadow-red-500/50 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
               title={`${t('editor.pressToTalk')} (${hotkeys.toggleRecord})`}
             >
               <div className={`absolute inset-0 rounded-lg border-2 border-white/30 ${isListening ? 'animate-pulse' : 'hidden'}`}></div>
@@ -952,16 +952,16 @@ const EditorPanel: React.FC<EditorPanelProps> = ({
                 </div>
 
                 {/* Month Stats Box */}
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-purple-500/20 bg-purple-900/10 text-sm">
-                    <span className="font-semibold text-purple-400/80 uppercase text-xs tracking-wider">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-blue-500/20 bg-blue-900/10 text-sm">
+                    <span className="font-semibold text-blue-400/80 uppercase text-xs tracking-wider">
                         {today.toLocaleString(language === 'pl' ? 'pl' : 'en-US', { month: 'long' })}:
                     </span>
-                    <span className="font-bold text-purple-200">
-                        {monthStats.points.toFixed(0)} <span className="font-normal text-purple-400/60 text-xs">pts</span>
+                    <span className="font-bold text-blue-200">
+                        {monthStats.points.toFixed(0)} <span className="font-normal text-blue-400/60 text-xs">pts</span>
                     </span>
-                    <span className="text-purple-500/40">/</span>
-                    <span className="font-bold text-purple-200">
-                        {monthStats.count} <span className="font-normal text-purple-400/60 text-xs">st.</span>
+                    <span className="text-blue-500/40">/</span>
+                    <span className="font-bold text-blue-200">
+                        {monthStats.count} <span className="font-normal text-blue-400/60 text-xs">st.</span>
                     </span>
                 </div>
             </div>
@@ -1014,7 +1014,7 @@ const EditorPanel: React.FC<EditorPanelProps> = ({
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
                 onDrop={handleDrop}
-                className={`w-full flex-1 ${layoutDensity === 'compact' ? 'p-4' : 'p-6'} pt-2 text-keyboard focus:outline-none overflow-y-auto whitespace-pre-wrap leading-relaxed selection:bg-purple-500/50`}
+                className={`w-full flex-1 ${layoutDensity === 'compact' ? 'p-4' : 'p-6'} pt-2 text-keyboard focus:outline-none overflow-y-auto whitespace-pre-wrap leading-relaxed selection:bg-blue-500/50`}
                 data-placeholder={t('editor.placeholder')}
                 style={{ fontSize: `${fontSize}px` }}
             />

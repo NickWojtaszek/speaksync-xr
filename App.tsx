@@ -100,7 +100,7 @@ const AuthWrapper: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 minHeight: '100vh',
-                color: '#a78bfa'
+                color: '#3b82f6'
             }}>
                 Loading...
             </div>

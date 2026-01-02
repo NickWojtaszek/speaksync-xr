@@ -156,7 +156,7 @@ const AccountingDashboard: React.FC = () => {
                 <h3 className="font-semibold" style={{ color: currentTheme.colors.textPrimary }}>
                   {report.userName}
                 </h3>
-                <span className="text-xs px-2 py-1 bg-purple-900/50 text-purple-300 rounded">
+                <span className="text-xs px-2 py-1 bg-blue-900/50 text-blue-300 rounded">
                   {report.month}/{report.year}
                 </span>
                 <span

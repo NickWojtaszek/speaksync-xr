@@ -171,7 +171,7 @@ const AIConfigurationPage: React.FC = () => {
               <button
                 key={type}
                 onClick={() => handleAddProvider(type)}
-                className="flex items-center justify-center gap-2 px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors"
+                className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
               >
                 <PlusIcon className="h-5 w-5" />
                 {providerTemplates[type].name}
@@ -201,7 +201,7 @@ const AIConfigurationPage: React.FC = () => {
                       <div className="flex items-center gap-3 mb-2">
                         <h3 className="text-lg font-semibold text-white">{provider.name}</h3>
                         {aiSettings.defaultProvider === provider.id && (
-                          <span className="px-2 py-1 text-xs bg-purple-600 text-white rounded">Default</span>
+                          <span className="px-2 py-1 text-xs bg-blue-600 text-white rounded">Default</span>
                         )}
                         <span className={`px-2 py-1 text-xs rounded ${
                           provider.enabled ? 'bg-green-600 text-white' : 'bg-gray-600 text-gray-300'
@@ -241,7 +241,7 @@ const AIConfigurationPage: React.FC = () => {
                       {aiSettings.defaultProvider !== provider.id && (
                         <button
                           onClick={() => handleSetDefault(provider.id)}
-                          className="px-3 py-1 text-sm bg-purple-600 hover:bg-purple-700 text-white font-medium rounded transition-colors"
+                          className="px-3 py-1 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded transition-colors"
                         >
                           Set Default
                         </button>
@@ -285,7 +285,7 @@ const AIConfigurationPage: React.FC = () => {
                     type="text"
                     value={editingProvider.name}
                     onChange={(e) => setEditingProvider({ ...editingProvider, name: e.target.value })}
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -299,7 +299,7 @@ const AIConfigurationPage: React.FC = () => {
                     value={editingProvider.apiKey}
                     onChange={(e) => setEditingProvider({ ...editingProvider, apiKey: e.target.value })}
                     placeholder="Enter your API key"
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono text-sm"
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
                   />
                   <p className="text-xs text-blue-400 mt-1">
                     {providerTemplates[editingProvider.type].info}
@@ -323,7 +323,7 @@ const AIConfigurationPage: React.FC = () => {
                     value={editingProvider.model}
                     onChange={(e) => setEditingProvider({ ...editingProvider, model: e.target.value })}
                     placeholder="e.g., gpt-4, gemini-1.5-pro"
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -338,7 +338,7 @@ const AIConfigurationPage: React.FC = () => {
                       value={editingProvider.endpoint || ''}
                       onChange={(e) => setEditingProvider({ ...editingProvider, endpoint: e.target.value })}
                       placeholder="http://localhost:8000/api"
-                      className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 )}

@@ -54,15 +54,15 @@ export const themes: Record<string, Theme> = {
       borderColor: '#334155',
       borderLight: '#475569',
 
-      accentPrimary: '#a855f7',
+      accentPrimary: '#3b82f6',
       accentSuccess: '#10b981',
       accentWarning: '#f59e0b',
       accentError: '#ef4444',
 
       editorBg: '#1e293b',
       editorBorder: '#334155',
-      buttonPrimary: '#a855f7',
-      buttonPrimaryHover: '#9333ea',
+      buttonPrimary: '#3b82f6',
+      buttonPrimaryHover: '#2563eb',
       buttonSecondary: '#475569',
       buttonSecondaryHover: '#64748b',
     },

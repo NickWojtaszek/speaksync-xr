@@ -187,7 +187,7 @@ const MainPage: React.FC = () => {
                     <div className="relative w-full h-full">
                         <PlannerView />
                         {import.meta.env.VITE_DEV_BADGES === 'true' && (
-                            <div className="absolute bottom-1 left-2 px-2 py-0.5 text-[11px] font-semibold rounded bg-purple-700 text-white opacity-80 pointer-events-none">
+                            <div className="absolute bottom-1 left-2 px-2 py-0.5 text-[11px] font-semibold rounded bg-blue-700 text-white opacity-80 pointer-events-none">
                                 planner
                             </div>
                         )}
@@ -208,7 +208,7 @@ const MainPage: React.FC = () => {
                                             type="text"
                                             value={codesFormData.code}
                                             onChange={(e) => setCodesFormData({...codesFormData, code: e.target.value})}
-                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                     </div>
                                     <div>
@@ -217,7 +217,7 @@ const MainPage: React.FC = () => {
                                             type="text"
                                             value={codesFormData.fullCode}
                                             onChange={(e) => setCodesFormData({...codesFormData, fullCode: e.target.value})}
-                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                     </div>
                                     <div>
@@ -227,7 +227,7 @@ const MainPage: React.FC = () => {
                                             step="0.1"
                                             value={codesFormData.points}
                                             onChange={(e) => setCodesFormData({...codesFormData, points: parseFloat(e.target.value)})}
-                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                     </div>
                                     <div>
@@ -236,7 +236,7 @@ const MainPage: React.FC = () => {
                                             value={codesFormData.desc}
                                             onChange={(e) => setCodesFormData({...codesFormData, desc: e.target.value})}
                                             rows={3}
-                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                                         />
                                     </div>
                                     <div>
@@ -245,7 +245,7 @@ const MainPage: React.FC = () => {
                                             type="text"
                                             value={codesFormData.category}
                                             onChange={(e) => setCodesFormData({...codesFormData, category: e.target.value})}
-                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                     </div>
                                     <div className="flex gap-2 pt-4">
@@ -295,7 +295,7 @@ const MainPage: React.FC = () => {
                                 <tbody>
                                     {radiologyCodes.map(c => (
                                         <tr key={c.code} className="border-b border-gray-700/50 hover:bg-gray-700/30 transition-colors">
-                                            <td className="p-3 font-mono text-purple-300 font-bold">{c.code}</td>
+                                            <td className="p-3 font-mono text-blue-300 font-bold">{c.code}</td>
                                             <td className="p-3 text-gray-300 text-sm">{c.fullCode}</td>
                                             <td className="p-3 text-gray-300">{c.points.toFixed(1)}</td>
                                             <td className="p-3 text-gray-400 text-sm">{c.category}</td>
@@ -372,7 +372,7 @@ const MainPage: React.FC = () => {
                                 remoteAudioStream={remoteAudioStream}
                             />
                             {import.meta.env.VITE_DEV_BADGES === 'true' && (
-                                <div className="absolute bottom-1 left-2 px-2 py-0.5 text-[11px] font-semibold rounded bg-purple-700 text-white opacity-80 pointer-events-none">
+                                <div className="absolute bottom-1 left-2 px-2 py-0.5 text-[11px] font-semibold rounded bg-blue-700 text-white opacity-80 pointer-events-none">
                                     editor-main
                                 </div>
                             )}
@@ -383,7 +383,7 @@ const MainPage: React.FC = () => {
                                 onPreviewTemplate={handlePreviewTemplate}
                             />
                             {import.meta.env.VITE_DEV_BADGES === 'true' && (
-                                <div className="absolute bottom-1 left-2 px-2 py-0.5 text-[11px] font-semibold rounded bg-purple-700 text-white opacity-80 pointer-events-none">
+                                <div className="absolute bottom-1 left-2 px-2 py-0.5 text-[11px] font-semibold rounded bg-blue-700 text-white opacity-80 pointer-events-none">
                                     editor-templates
                                 </div>
                             )}

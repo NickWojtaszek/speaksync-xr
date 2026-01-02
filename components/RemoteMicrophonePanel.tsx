@@ -171,7 +171,7 @@ export const RemoteMicrophonePanel: React.FC<RemoteMicrophonePanelProps> = ({
             <>
               <p className="text-sm text-gray-300">Share this code with your phone:</p>
               <div className="p-4 rounded text-center" style={{ backgroundColor: `${currentTheme.colors.bgTertiary}cc`, borderColor: currentTheme.colors.borderColor, borderWidth: '1px' }}>
-                <p className="text-3xl font-bold text-purple-300 tracking-widest">{displayCode}</p>
+                <p className="text-3xl font-bold text-blue-300 tracking-widest">{displayCode}</p>
               </div>
               <button
                 onClick={handleCopyCode}

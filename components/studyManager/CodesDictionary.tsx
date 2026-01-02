@@ -97,7 +97,7 @@ const CodesDictionary: React.FC<CodesDictionaryProps> = ({ codes, onSelectCode, 
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 placeholder={t('templates.searchPlaceholder')}
-                                className="w-full pl-9 pr-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-full pl-9 pr-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                             <MagnifyingGlassPlusIcon className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
                         </div>
@@ -121,11 +121,11 @@ const CodesDictionary: React.FC<CodesDictionaryProps> = ({ codes, onSelectCode, 
                                         onClick={() => onSelectCode?.(c)}
                                         className={`border-b border-gray-700/50 last:border-b-0 transition-colors cursor-pointer ${
                                             selectedCode?.code === c.code 
-                                              ? 'bg-purple-900/40 hover:bg-purple-900/60' 
+                                              ? 'bg-blue-900/40 hover:bg-blue-900/60' 
                                               : 'hover:bg-gray-700/30'
                                         }`}
                                     >
-                                        <td className="p-3 font-mono text-purple-300 font-bold">{c.code}</td>
+                                        <td className="p-3 font-mono text-blue-300 font-bold">{c.code}</td>
                                         <td className="p-3 text-gray-300 text-sm">{c.desc}</td>
                                         <td className="p-3 text-gray-300">{c.points.toFixed(1)}</td>
                                         <td className="p-3 text-gray-400 text-sm">{c.category}</td>
@@ -153,7 +153,7 @@ const CodesDictionary: React.FC<CodesDictionaryProps> = ({ codes, onSelectCode, 
                         <>
                             <button 
                                 onClick={() => setIsEditPanelCollapsed(!isEditPanelCollapsed)} 
-                                className="flex justify-between items-center p-4 text-left bg-purple-600 hover:bg-purple-700 transition-colors"
+                                className="flex justify-between items-center p-4 text-left bg-blue-600 hover:bg-blue-700 transition-colors"
                             >
                                 <h3 className="text-lg font-bold text-white">Edit Code</h3>
                                 <ChevronDownIcon className={`h-5 w-5 transform transition-transform ${isEditPanelCollapsed ? '' : 'rotate-180'}`} />
@@ -167,7 +167,7 @@ const CodesDictionary: React.FC<CodesDictionaryProps> = ({ codes, onSelectCode, 
                                             type="text"
                                             value={editFormData.code}
                                             onChange={(e) => handleEditFormChange('code', e.target.value)}
-                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                     </div>
 
@@ -178,7 +178,7 @@ const CodesDictionary: React.FC<CodesDictionaryProps> = ({ codes, onSelectCode, 
                                             type="text"
                                             value={editFormData.fullCode}
                                             onChange={(e) => handleEditFormChange('fullCode', e.target.value)}
-                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                     </div>
 
@@ -189,7 +189,7 @@ const CodesDictionary: React.FC<CodesDictionaryProps> = ({ codes, onSelectCode, 
                                             value={editFormData.desc}
                                             onChange={(e) => handleEditFormChange('desc', e.target.value)}
                                             rows={3}
-                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                                         />
                                     </div>
 
@@ -201,7 +201,7 @@ const CodesDictionary: React.FC<CodesDictionaryProps> = ({ codes, onSelectCode, 
                                             step="0.1"
                                             value={editFormData.points}
                                             onChange={(e) => handleEditFormChange('points', e.target.value)}
-                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                     </div>
 
@@ -212,7 +212,7 @@ const CodesDictionary: React.FC<CodesDictionaryProps> = ({ codes, onSelectCode, 
                                             type="text"
                                             value={editFormData.category}
                                             onChange={(e) => handleEditFormChange('category', e.target.value)}
-                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         />
                                     </div>
 

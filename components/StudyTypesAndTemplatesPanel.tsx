@@ -102,7 +102,7 @@ const StudyTypesAndTemplatesPanel: React.FC<StudyTypesAndTemplatesPanelProps> = 
       reorderTemplates(dragTemplateId.current, targetTemplateId);
     }
     dragTemplateId.current = null;
-    e.currentTarget.classList.remove('border-purple-500', 'border-2');
+    e.currentTarget.classList.remove('border-blue-500', 'border-2');
   };
 
   const handleEditTemplate = (e: React.MouseEvent, template: Template) => {
@@ -149,14 +149,14 @@ const StudyTypesAndTemplatesPanel: React.FC<StudyTypesAndTemplatesPanelProps> = 
       onDragStart={(e) => !template.isSystem && !editMode && handleTemplateDragStart(e, template)}
       onDrop={(e) => !template.isSystem && !editMode && handleTemplateDrop(e, template.id)}
       onDragOver={(e) => !template.isSystem && !editMode && e.preventDefault()}
-      onDragEnter={(e) => !template.isSystem && !editMode && e.currentTarget.classList.add('border-purple-500', 'border-2')}
-      onDragLeave={(e) => !template.isSystem && !editMode && e.currentTarget.classList.remove('border-purple-500', 'border-2')}
+      onDragEnter={(e) => !template.isSystem && !editMode && e.currentTarget.classList.add('border-blue-500', 'border-2')}
+      onDragLeave={(e) => !template.isSystem && !editMode && e.currentTarget.classList.remove('border-blue-500', 'border-2')}
       className="group rounded-lg p-3 transition-all flex items-center gap-3 cursor-pointer"
       style={{ backgroundColor: currentTheme.colors.bgPrimary, borderColor: currentTheme.colors.borderColor, borderWidth: '1px' }}
     >
       {!template.isSystem && !editMode && <DragHandleIcon className="flex-shrink-0 h-5 w-5" style={{ color: currentTheme.colors.textSecondary }} />}
       <div className="flex-grow min-w-0">
-          <h4 className="font-semibold group-hover:text-purple-300 truncate" style={{ color: currentTheme.colors.textPrimary }}>{template.title}</h4>
+          <h4 className="font-semibold group-hover:text-blue-300 truncate" style={{ color: currentTheme.colors.textPrimary }}>{template.title}</h4>
           <div className="flex items-center gap-1.5 mt-1">
             <span className="text-xs px-2 py-0.5 rounded-full" style={{ color: currentTheme.colors.accentSuccess, backgroundColor: `${currentTheme.colors.accentSuccess}30` }}>{t(`scenarios.${template.scenario}`, template.scenario || t('templates.general'))}</span>
           </div>
@@ -208,7 +208,7 @@ const StudyTypesAndTemplatesPanel: React.FC<StudyTypesAndTemplatesPanelProps> = 
         <div key={st} className="mb-2">
           {editingIndex === index ? (
             <form onSubmit={(e) => handleEditStudyTypeSubmit(e, index)} className="flex items-center gap-2">
-              <input type="text" value={editingName} onChange={(e) => setEditingName(e.target.value)} className="flex-grow p-2 bg-gray-900 border border-purple-500 rounded-md text-sm" autoFocus />
+              <input type="text" value={editingName} onChange={(e) => setEditingName(e.target.value)} className="flex-grow p-2 bg-gray-900 border border-blue-500 rounded-md text-sm" autoFocus />
               <button type="submit" className="p-2 bg-green-600/50 rounded-md text-sm">{t('studyTypes.save')}</button>
             </form>
           ) : (
@@ -224,7 +224,7 @@ const StudyTypesAndTemplatesPanel: React.FC<StudyTypesAndTemplatesPanelProps> = 
       ))}
       <form onSubmit={handleAddStudyTypeSubmit} className="mt-4 p-2 border-t border-gray-700">
           <input type="text" value={newStudyTypeName} onChange={(e) => setNewStudyTypeName(e.target.value)} placeholder={t('studyTypes.addNew')} className="w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-sm mb-2" />
-          <button type="submit" className="w-full p-2 bg-purple-600/50 rounded-md hover:bg-purple-600">{t('studyTypes.add')}</button>
+          <button type="submit" className="w-full p-2 bg-blue-600/50 rounded-md hover:bg-blue-600">{t('studyTypes.add')}</button>
       </form>
     </>
   );
@@ -263,7 +263,7 @@ const StudyTypesAndTemplatesPanel: React.FC<StudyTypesAndTemplatesPanelProps> = 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('templates.searchPlaceholder')}
-                className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-md text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-md text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <SearchIcon className="absolute left-3 top-2.5 h-4 w-4 text-gray-500" />
             {searchQuery && (

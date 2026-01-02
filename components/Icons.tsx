@@ -190,7 +190,7 @@ export const UserIcon: React.FC<{className?: string}> = ({ className = "h-5 w-5"
     </svg>
 );
 
-export const LogoIcon: React.FC<{className?: string}> = ({ className = "h-16 w-16 text-purple-400" }) => (
+export const LogoIcon: React.FC<{className?: string}> = ({ className = "h-16 w-16 text-blue-400" }) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64" className={className}>
         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M32 55.42C18.66 55.42 8.58 45.34 8.58 32 8.58 18.66 18.66 8.58 32 8.58S55.42 18.66 55.42 32c0 7.1-2.95 13.53-7.73 18.06" />
         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M22.94 47.69c-3.1-2.07-5.5-4.98-6.8-8.33m2.3-14.72c2.07-3.1 4.98-5.5 8.33-6.8" />

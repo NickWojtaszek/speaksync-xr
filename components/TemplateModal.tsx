@@ -75,7 +75,7 @@ const TemplateModal: React.FC = () => {
                 type="text"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
-                className="w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
@@ -86,7 +86,7 @@ const TemplateModal: React.FC = () => {
                         id="studyType"
                         value={studyType}
                         onChange={e => setStudyType(e.target.value)}
-                        className="w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
                     >
                         <option value="" disabled>{t('templateModal.selectStudyType')}</option>
@@ -99,7 +99,7 @@ const TemplateModal: React.FC = () => {
                         id="scenario"
                         value={scenario}
                         onChange={e => setScenario(e.target.value)}
-                        className="w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        className="w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         disabled={availableScenarios.length === 0}
                     >
                          <option value="">{availableScenarios.length === 0 ? t('templateModal.noScenarios') : t('templateModal.selectScenario')}</option>
@@ -113,7 +113,7 @@ const TemplateModal: React.FC = () => {
                 id="content"
                 value={content}
                 onChange={e => setContent(e.target.value)}
-                className="w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono text-sm"
+                className="w-full p-2 bg-gray-900 border border-gray-600 rounded-md text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm"
                 rows={12}
                 placeholder={t('templateModal.templateContentPlaceholder')}
               />
@@ -121,7 +121,7 @@ const TemplateModal: React.FC = () => {
           </div>
           <div className="p-4 border-t border-gray-700 bg-gray-800/50 flex justify-end space-x-3">
             <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded-md text-white font-semibold transition-colors">{t('templateModal.cancel')}</button>
-            <button type="submit" className="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-md text-white font-semibold transition-colors">{editingTemplate ? t('templateModal.saveChanges') : t('templateModal.addTemplate')}</button>
+            <button type="submit" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold transition-colors">{editingTemplate ? t('templateModal.saveChanges') : t('templateModal.addTemplate')}</button>
           </div>
         </form>
       </div>

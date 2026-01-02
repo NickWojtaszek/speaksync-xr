@@ -74,11 +74,11 @@ const LoginPage: React.FC = () => {
   const requiresPin = selectedUser?.pin !== undefined;
 
   return (
-    <main className="min-h-screen w-screen flex items-center justify-center p-4 font-sans overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
+    <main className="min-h-screen w-screen flex items-center justify-center p-4 font-sans overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
       <div className="w-full max-w-md mx-auto">
         {/* Logo */}
         <div className="flex justify-center mb-8 animate-fade-in">
-          <LogoIcon className="h-20 w-20 text-purple-400" />
+          <LogoIcon className="h-20 w-20 text-blue-400" />
         </div>
 
         {/* Title */}
@@ -107,7 +107,7 @@ const LoginPage: React.FC = () => {
                   const user = users.find(u => u.id === e.target.value);
                   setSelectedUser(user || null);
                 }}
-                className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 required
               >
                 <option value="">-- Select User --</option>
@@ -133,7 +133,7 @@ const LoginPage: React.FC = () => {
                   onChange={(e) => handlePinInput(e.target.value)}
                   placeholder="••••"
                   maxLength={4}
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white text-center text-2xl tracking-widest placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white text-center text-2xl tracking-widest placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   autoFocus
                 />
               </div>
@@ -159,7 +159,7 @@ const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading || !selectedUser}
-              className="w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-800 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors"
+              className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors"
             >
               {loading ? 'Logging in...' : 'Login'}
             </button>

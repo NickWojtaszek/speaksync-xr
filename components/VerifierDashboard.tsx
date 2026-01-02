@@ -203,7 +203,7 @@ const VerifierDashboard: React.FC = () => {
                 <h3 className="font-semibold" style={{ color: currentTheme.colors.textPrimary }}>
                   {report.userName}
                 </h3>
-                <span className="text-xs px-2 py-1 bg-purple-900/50 text-purple-300 rounded">
+                <span className="text-xs px-2 py-1 bg-blue-900/50 text-blue-300 rounded">
                   {report.month}/{report.year}
                 </span>
                 {hasDuplicates && (
@@ -243,7 +243,7 @@ const VerifierDashboard: React.FC = () => {
               {accountingStatus && (
                 <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
                   accountingStatus === 'received' ? 'bg-blue-900/50 text-blue-300' :
-                  accountingStatus === 'processed' ? 'bg-purple-900/50 text-purple-300' :
+                  accountingStatus === 'processed' ? 'bg-blue-900/50 text-blue-300' :
                   'bg-cyan-900/50 text-cyan-300'
                 }`}>
                   {accountingStatus === 'received' && '📥 Received'}
@@ -352,7 +352,7 @@ const VerifierDashboard: React.FC = () => {
 
             {/* Verification Actions (for pending reports) */}
             {status === 'pending' && selectedReportForReview === report.id && (
-              <div className="p-4 bg-purple-900/20 border border-purple-600 rounded-lg space-y-3">
+              <div className="p-4 bg-blue-900/20 border border-blue-600 rounded-lg space-y-3">
                 <textarea
                   value={reviewComments}
                   onChange={(e) => setReviewComments(e.target.value)}
@@ -362,7 +362,7 @@ const VerifierDashboard: React.FC = () => {
                     color: currentTheme.colors.textPrimary,
                     borderColor: currentTheme.colors.borderColor
                   }}
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                   rows={3}
                 />
 
@@ -435,7 +435,7 @@ const VerifierDashboard: React.FC = () => {
                   </p>
                   <span className={`text-xs px-2 py-1 rounded ${
                     accountingStatus === 'received' ? 'bg-blue-900/50 text-blue-300' :
-                    accountingStatus === 'processed' ? 'bg-purple-900/50 text-purple-300' :
+                    accountingStatus === 'processed' ? 'bg-blue-900/50 text-blue-300' :
                     'bg-cyan-900/50 text-cyan-300'
                   }`}>
                     {accountingStatus === 'received' && 'Received'}

@@ -70,20 +70,20 @@ export const GlobalThemeStyles: React.FC<{ children: React.ReactNode }> = ({ chi
           .bg-gray-900\/20 { background-color: ${currentTheme.colors.bgSecondary}40 !important; }
 
           /* PURPLE/INDIGO BACKGROUNDS */
-          .bg-purple-50, .bg-indigo-50 { background-color: ${currentTheme.colors.bgPrimary} !important; }
-          .bg-purple-100, .bg-indigo-100 { background-color: ${currentTheme.colors.bgSecondary} !important; }
-          .bg-purple-200, .bg-indigo-200 { background-color: ${currentTheme.colors.bgTertiary} !important; }
-          .bg-purple-300, .bg-indigo-300 { background-color: ${currentTheme.colors.bgHover} !important; }
-          .bg-purple-400, .bg-purple-500, .bg-purple-600, .bg-purple-700, .bg-indigo-500, .bg-indigo-600 { 
+          .bg-blue-50, .bg-indigo-50 { background-color: ${currentTheme.colors.bgPrimary} !important; }
+          .bg-blue-100, .bg-indigo-100 { background-color: ${currentTheme.colors.bgSecondary} !important; }
+          .bg-blue-200, .bg-indigo-200 { background-color: ${currentTheme.colors.bgTertiary} !important; }
+          .bg-blue-300, .bg-indigo-300 { background-color: ${currentTheme.colors.bgHover} !important; }
+          .bg-blue-400, .bg-blue-500, .bg-blue-600, .bg-blue-700, .bg-indigo-500, .bg-indigo-600 { 
             background-color: ${currentTheme.colors.buttonPrimary} !important; 
           }
-          .bg-purple-800, .bg-purple-900, .bg-indigo-800, .bg-indigo-900 { 
+          .bg-blue-800, .bg-blue-900, .bg-indigo-800, .bg-indigo-900 { 
             background-color: ${currentTheme.colors.bgPrimary} !important; 
           }
-          .bg-purple-400\/20, .bg-purple-500\/20, .bg-purple-600\/20, .bg-purple-600\/30 { 
+          .bg-blue-400\/20, .bg-blue-500\/20, .bg-blue-600\/20, .bg-blue-600\/30 { 
             background-color: ${currentTheme.colors.buttonPrimary}25 !important; 
           }
-          .bg-purple-900\/20, .bg-purple-900\/30 { 
+          .bg-blue-900\/20, .bg-blue-900\/30 { 
             background-color: ${currentTheme.colors.bgSecondary}40 !important; 
           }
 
@@ -114,7 +114,7 @@ export const GlobalThemeStyles: React.FC<{ children: React.ReactNode }> = ({ chi
             color: ${currentTheme.colors.textPrimary} !important; 
           }
 
-          .text-purple-200, .text-purple-300, .text-purple-400 { 
+          .text-blue-200, .text-blue-300, .text-blue-400 { 
             color: ${currentTheme.colors.accentPrimary} !important; 
           }
           .text-green-200, .text-green-300, .text-green-400 { 
@@ -131,7 +131,7 @@ export const GlobalThemeStyles: React.FC<{ children: React.ReactNode }> = ({ chi
           .border-gray-600, .border-gray-700, .border-gray-800 { 
             border-color: ${currentTheme.colors.borderColor} !important; 
           }
-          .border-purple-500, .border-purple-600 { 
+          .border-blue-500, .border-blue-600 { 
             border-color: ${currentTheme.colors.accentPrimary} !important; 
           }
           .border-green-500, .border-green-600 { 
@@ -171,10 +171,10 @@ export const GlobalThemeStyles: React.FC<{ children: React.ReactNode }> = ({ chi
           .hover\\:bg-gray-700:hover { background-color: ${currentTheme.colors.bgHover} !important; }
           .hover\\:bg-gray-600:hover { background-color: ${currentTheme.colors.bgTertiary} !important; }
           .hover\\:bg-gray-500:hover { background-color: ${currentTheme.colors.bgHover} !important; }
-          .hover\\:bg-purple-600\/30:hover { background-color: ${currentTheme.colors.buttonPrimary}30 !important; }
+          .hover\\:bg-blue-600\/30:hover { background-color: ${currentTheme.colors.buttonPrimary}30 !important; }
           .hover\\:bg-green-600\/30:hover { background-color: ${currentTheme.colors.accentSuccess}30 !important; }
           .hover\\:text-white:hover { color: ${currentTheme.colors.textPrimary} !important; }
-          .hover\\:text-purple-300:hover { color: ${currentTheme.colors.accentPrimary} !important; }
+          .hover\\:text-blue-300:hover { color: ${currentTheme.colors.accentPrimary} !important; }
 
           /* TEMPLATE BUTTON ICON STYLING */
           .template-btn-icon { background-color: transparent; }

@@ -7,6 +7,7 @@ import { usePINAuth } from '../context/PINAuthContext';
 import { useApp } from '../context/AppContext';
 import { useSettings } from '../context/SettingsContext';
 import { useTemplate } from '../context/TemplateContext';
+import { useStudy } from '../context/StudyContext';
 import { useTheme } from '../context/ThemeContext';
 import StyleTrainingManager from '../components/StyleTrainingManager';
 
@@ -79,9 +80,12 @@ const SettingsPage: React.FC = () => {
       customCommands, setCustomCommands, aiPromptConfig, setAiPromptConfig, colorSettings, setColorSettings,
       deletedFiles, restoreCase, permanentlyDeleteCase, layoutDensity, setLayoutDensity, hotkeys, setHotkeys
   } = useSettings();
-  const { 
-      clearTemplateData, importTemplates, importTexterTemplates, exportTemplates 
+  const {
+      clearTemplateData, importTemplates, importTexterTemplates, exportTemplates
   } = useTemplate();
+  const {
+      exportStudyData, importStudyData
+  } = useStudy();
 
   // Verifier role restrictions
   const isVerifier = currentUser?.role === 'verifier';
@@ -95,6 +99,7 @@ const SettingsPage: React.FC = () => {
   const vocabFileInputRef = useRef<HTMLInputElement>(null);
   const templateFileInputRef = useRef<HTMLInputElement>(null);
   const texterTemplateFileInputRef = useRef<HTMLInputElement>(null);
+  const plannerDataFileInputRef = useRef<HTMLInputElement>(null);
   const { t, language, setLanguage, supportedLanguages } = useTranslations();
   
   useEffect(() => {
@@ -241,6 +246,38 @@ const SettingsPage: React.FC = () => {
       link.click();
       URL.revokeObjectURL(url);
       showMessage(t('settings.exportTemplatesSuccess'));
+  };
+
+  const handleExportPlannerData = () => {
+    const data = exportStudyData();
+    const jsonString = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    const timestamp = new Date().toISOString().split('T')[0];
+    link.download = `planner-data-${timestamp}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    showMessage('Planner data exported successfully!');
+  };
+
+  const handleImportPlannerData = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const jsonData = JSON.parse(e.target?.result as string);
+        importStudyData(jsonData);
+        showMessage('Planner data imported successfully!');
+      } catch (error) {
+        showMessage('Error importing planner data. Invalid file format.');
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
   };
 
   const handleRequestClearData = () => {
@@ -585,10 +622,25 @@ const SettingsPage: React.FC = () => {
               <div className="space-y-4">
                 <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700"><h3 className="font-semibold text-blue-300 mb-3">{t('settings.templateManagement')}</h3><div className="grid grid-cols-1 sm:grid-cols-3 gap-3"><button onClick={() => texterTemplateFileInputRef.current?.click()} className="w-full flex items-center justify-center p-2 bg-blue-600/20 text-blue-300 border border-blue-500/50 rounded-md hover:bg-blue-600/30 transition-colors"><ImportIcon />{t('settings.importTemplatesJson')}</button><button onClick={() => templateFileInputRef.current?.click()} className="w-full flex items-center justify-center p-2 bg-blue-600/20 text-blue-300 border border-blue-500/50 rounded-md hover:bg-blue-600/30 transition-colors"><ImportIcon />{t('settings.importTemplatesTxt')}</button><button onClick={handleExportTemplates} className="w-full flex items-center justify-center p-2 bg-blue-600/20 text-blue-300 border border-blue-500/50 rounded-md hover:bg-blue-600/30 transition-colors"><UploadIcon />{t('settings.exportTemplatesTxt')}</button></div></div>
                 <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700"><h3 className="font-semibold text-green-300 mb-3">{t('settings.vocabularyManagement')}</h3><div className="grid grid-cols-1 sm:grid-cols-3 gap-3"><button onClick={handleImportRadiologyTerms} className="w-full flex items-center justify-center p-2 bg-green-600/20 text-green-300 border border-green-500/50 rounded-md hover:bg-green-600/30 transition-colors"><ImportIcon />{t('settings.importRadiology')}</button><button onClick={() => vocabFileInputRef.current?.click()} className="w-full flex items-center justify-center p-2 bg-green-600/20 text-green-300 border border-green-500/50 rounded-md hover:bg-green-600/30 transition-colors"><ImportIcon />{t('settings.importFromFile')}</button><button onClick={handleExportToFile} className="w-full flex items-center justify-center p-2 bg-green-600/20 text-green-300 border border-green-500/50 rounded-md hover:bg-green-600/30 transition-colors"><UploadIcon />{t('settings.exportToFile')}</button></div></div>
+                <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+                  <h3 className="font-semibold text-yellow-300 mb-3">Planner Data (Developer)</h3>
+                  <p className="text-xs text-gray-400 mb-3">Backup your studies and planned days during testing</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button onClick={() => plannerDataFileInputRef.current?.click()} className="w-full flex items-center justify-center p-2 bg-yellow-600/20 text-yellow-300 border border-yellow-500/50 rounded-md hover:bg-yellow-600/30 transition-colors">
+                      <ImportIcon />
+                      Import Planner Data
+                    </button>
+                    <button onClick={handleExportPlannerData} className="w-full flex items-center justify-center p-2 bg-yellow-600/20 text-yellow-300 border border-yellow-500/50 rounded-md hover:bg-yellow-600/30 transition-colors">
+                      <UploadIcon />
+                      Export Planner Data
+                    </button>
+                  </div>
+                </div>
               </div>
               <input type="file" ref={vocabFileInputRef} onChange={handleVocabFileChange} accept=".txt" className="hidden" />
               <input type="file" ref={templateFileInputRef} onChange={handleTemplateFileChange} accept=".txt" className="hidden" />
               <input type="file" ref={texterTemplateFileInputRef} onChange={handleTexterTemplateFileChange} accept=".json" className="hidden" />
+              <input type="file" ref={plannerDataFileInputRef} onChange={handleImportPlannerData} accept=".json" className="hidden" />
               {message && <p className="text-sm text-green-400 mt-4 text-center animate-fade-in">{message}</p>}
             </div>
 

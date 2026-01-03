@@ -89,6 +89,12 @@ export interface AIPromptConfig {
   useTNM: boolean;
 }
 
+export type OrganCategory =
+  | 'Liver' | 'Brain' | 'Lung' | 'Heart' | 'Kidney' | 'Spine'
+  | 'Abdomen' | 'Chest' | 'Pelvis' | 'Extremities' | 'Vascular'
+  | 'Breast' | 'Head-Neck' | 'MSK' | 'Neuro' | 'Cardiac'
+  | 'GI' | 'GU' | 'Oncology' | 'Other';
+
 export interface GrammarError {
   id: string;
   originalText: string;

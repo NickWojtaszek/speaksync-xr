@@ -19,6 +19,10 @@ interface AIReportRefinementModalProps {
     studyNumber: string;
     patientPesel?: string;
     templateHeader?: string;
+    financeCode: string;
+    financePatientId: string;
+    financeDate: string;
+    addToLibrary: boolean;
   }) => void;
   onCancel: () => void;
   templateId?: string;
@@ -63,6 +67,11 @@ const AIReportRefinementModal: React.FC<AIReportRefinementModalProps> = ({
     confidence: number;
   } | null>(null);
 
+  // Finance/Planner form state
+  const [financeCode, setFinanceCode] = useState('');
+  const [financePatientId, setFinancePatientId] = useState('');
+  const [financeDate, setFinanceDate] = useState(new Date().toISOString().split('T')[0]);
+
   const editableRef = useRef<HTMLDivElement>(null);
 
   // Reset state when modal opens
@@ -77,6 +86,9 @@ const AIReportRefinementModal: React.FC<AIReportRefinementModalProps> = ({
       setSelectedOrgan('Liver');
       setAddToLibrary(true);
       setAiClassification(null);
+      setFinanceCode('');
+      setFinancePatientId('');
+      setFinanceDate(new Date().toISOString().split('T')[0]);
       processAIEnhancement();
     }
   }, [isOpen, originalText]);
@@ -147,14 +159,23 @@ const AIReportRefinementModal: React.FC<AIReportRefinementModalProps> = ({
   };
 
   const handleSubmit = () => {
-    if (!studyNumber.trim()) {
-      alert('Study number is required');
+    // Validate finance fields (always required for planner)
+    if (!financeCode.trim()) {
+      alert('Radiology code is required for planner');
+      return;
+    }
+    if (!financePatientId.trim()) {
+      alert('Patient ID is required for planner');
+      return;
+    }
+    if (!financeDate.trim()) {
+      alert('Study date is required for planner');
       return;
     }
 
-    if (!addToLibrary) {
-      // User chose not to add to library, just close
-      onCancel();
+    // Validate teaching library fields only if adding to library
+    if (addToLibrary && !studyNumber.trim()) {
+      alert('Study number is required when adding to teaching library');
       return;
     }
 
@@ -167,7 +188,11 @@ const AIReportRefinementModal: React.FC<AIReportRefinementModalProps> = ({
       diseaseConfidence: aiClassification?.confidence,
       studyNumber: studyNumber.trim(),
       patientPesel: patientPesel.trim() || undefined,
-      templateHeader: templateHeader
+      templateHeader: templateHeader,
+      financeCode: financeCode.trim(),
+      financePatientId: financePatientId.trim(),
+      financeDate: financeDate,
+      addToLibrary: addToLibrary
     });
   };
 
@@ -293,7 +318,7 @@ const AIReportRefinementModal: React.FC<AIReportRefinementModalProps> = ({
                   ref={editableRef}
                   contentEditable
                   onInput={handleEditableChange}
-                  className="bg-green-500/10 p-4 rounded-md max-h-[60vh] overflow-y-auto border border-green-500/20 whitespace-pre-wrap font-mono text-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="bg-green-500/10 p-4 rounded-md max-h-[60vh] overflow-y-auto border border-green-500/20 whitespace-pre-wrap text-keyboard focus:outline-none focus:ring-2 focus:ring-green-500"
                   style={{ minHeight: '200px', fontSize: `${fontSize}px` }}
                 />
               </div>
@@ -323,13 +348,62 @@ const AIReportRefinementModal: React.FC<AIReportRefinementModalProps> = ({
                 )}
               </div>
 
+              {/* Finance & Planner Information (Always Required) */}
+              <div className="bg-gray-900/50 p-6 rounded-lg border border-blue-600">
+                <h3 className="text-lg font-bold text-blue-300 mb-2">Finance & Planner</h3>
+                <p className="text-xs text-gray-400 mb-4">
+                  Required to track study in planner and billing
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Radiology Code <span className="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={financeCode}
+                      onChange={(e) => setFinanceCode(e.target.value)}
+                      placeholder="e.g. 87.44.1"
+                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Patient ID <span className="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={financePatientId}
+                      onChange={(e) => setFinancePatientId(e.target.value)}
+                      placeholder="Patient identifier"
+                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Study Date <span className="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="date"
+                      value={financeDate}
+                      onChange={(e) => setFinanceDate(e.target.value)}
+                      className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Study Information (Teaching Library - Optional) */}
               <div className="bg-gray-900/50 p-6 rounded-lg border border-gray-700">
-                <h3 className="text-lg font-bold text-white mb-4">Study Information</h3>
+                <h3 className="text-lg font-bold text-white mb-2">Study Information</h3>
+                <p className="text-xs text-gray-400 mb-4">
+                  {addToLibrary ? 'Required when adding to teaching library' : 'Optional - not adding to library'}
+                </p>
 
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Study Number <span className="text-red-400">*</span>
+                      Study Number {addToLibrary && <span className="text-red-400">*</span>}
                     </label>
                     <input
                       type="text"
@@ -338,6 +412,7 @@ const AIReportRefinementModal: React.FC<AIReportRefinementModalProps> = ({
                       placeholder="Enter study number (max 11 digits)"
                       maxLength={11}
                       className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      disabled={!addToLibrary}
                     />
                   </div>
 
@@ -352,6 +427,7 @@ const AIReportRefinementModal: React.FC<AIReportRefinementModalProps> = ({
                       placeholder="Patient PESEL (11 digits)"
                       maxLength={11}
                       className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      disabled={!addToLibrary}
                     />
                   </div>
                 </div>
@@ -441,7 +517,7 @@ const AIReportRefinementModal: React.FC<AIReportRefinementModalProps> = ({
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={!studyNumber.trim()}
+                disabled={!financeCode.trim() || !financePatientId.trim() || !financeDate.trim() || (addToLibrary && !studyNumber.trim())}
                 className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {addToLibrary ? 'Save to Library' : 'Complete'}

@@ -19,7 +19,7 @@ interface StudyContextType {
     generatedReports: GeneratedReport[];
     addGeneratedReport: (reportData: Omit<GeneratedReport, 'id' | 'generatedAt'>) => void;
     deleteGeneratedReport: (reportId: string) => void;
-    importStudyData: (data: StudyData) => void;
+    importStudyData: (data: Partial<StudyData>) => void;
     exportStudyData: () => StudyData;
     plannedDays: Record<string, PlanStatus>;
     togglePlannedDay: (date: string) => void;
@@ -127,13 +127,22 @@ export const StudyProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         });
     };
 
-    const importStudyData = useCallback((newData: StudyData) => {
+    const importStudyData = useCallback((newData: Partial<StudyData>) => {
         setConfirmationState({
             isOpen: true,
             title: t('settings.dataManagement.confirmImportTitle'),
             message: t('settings.dataManagement.confirmImportMessage'),
             onConfirm: () => {
-                setData(newData);
+                // Merge imported data with defaults to handle missing fields
+                // This ensures backwards compatibility with older export files
+                const mergedData: StudyData = {
+                    studies: Array.isArray(newData.studies) ? newData.studies : initialStudyData.studies,
+                    personalInfo: newData.personalInfo ?? initialStudyData.personalInfo,
+                    radiologyCodes: Array.isArray(newData.radiologyCodes) ? newData.radiologyCodes : initialStudyData.radiologyCodes,
+                    generatedReports: Array.isArray(newData.generatedReports) ? newData.generatedReports : initialStudyData.generatedReports,
+                    plannedDays: newData.plannedDays ?? initialStudyData.plannedDays,
+                };
+                setData(mergedData);
                 closeConfirmation();
             }
         });

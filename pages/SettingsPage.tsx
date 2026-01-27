@@ -270,10 +270,11 @@ const SettingsPage: React.FC = () => {
     reader.onload = (e) => {
       try {
         const jsonData = JSON.parse(e.target?.result as string);
-        importStudyData(jsonData);
-        showMessage('Planner data imported successfully!');
+        importStudyData(jsonData, () => {
+          showMessage(t('settings.dataManagement.importSuccess'));
+        });
       } catch (error) {
-        showMessage('Error importing planner data. Invalid file format.');
+        showMessage(t('settings.dataManagement.importError'));
       }
     };
     reader.readAsText(file);

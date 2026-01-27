@@ -103,7 +103,13 @@
     "importTemplatesNoNew": "No new templates imported. All templates from file already exist.",
     "importTemplatesError": "Error importing templates. Check file format.",
     "exportTemplatesSuccess": "Templates exported successfully.",
-    "exportNoTemplates": "No templates to export."
+    "exportNoTemplates": "No templates to export.",
+    "dataManagement": {
+      "confirmImportTitle": "Import Planner Data",
+      "confirmImportMessage": "This will replace your existing studies, reports, and planner data. Are you sure you want to continue?",
+      "importSuccess": "Planner data imported successfully!",
+      "importError": "Error importing planner data. Invalid file format."
+    }
   },
   "editor": {
     "placeholder": "Select a template or start dictating...",

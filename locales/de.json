@@ -132,6 +132,12 @@
     "importTemplatesError": "Fehler beim Vorlagenimport. Überprüfen Sie das Dateiformat.",
     "exportTemplatesSuccess": "Vorlagen erfolgreich exportiert.",
     "exportNoTemplates": "Keine Vorlagen zum Exportieren.",
+    "dataManagement": {
+      "confirmImportTitle": "Planerdaten importieren",
+      "confirmImportMessage": "Dies ersetzt Ihre bestehenden Studien, Berichte und Planerdaten. Möchten Sie fortfahren?",
+      "importSuccess": "Planerdaten erfolgreich importiert!",
+      "importError": "Fehler beim Importieren der Planerdaten. Ungültiges Dateiformat."
+    },
     "editorAppearanceTitle": "Editor-Erscheinungsbild",
     "voiceColorLabel": "Textfarbe der Spracheingabe",
     "pastedColorLabel": "Farbe für eingefügten Text",

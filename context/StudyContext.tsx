@@ -19,7 +19,7 @@ interface StudyContextType {
     generatedReports: GeneratedReport[];
     addGeneratedReport: (reportData: Omit<GeneratedReport, 'id' | 'generatedAt'>) => void;
     deleteGeneratedReport: (reportId: string) => void;
-    importStudyData: (data: Partial<StudyData>) => void;
+    importStudyData: (data: Partial<StudyData>, onSuccess?: () => void) => void;
     exportStudyData: () => StudyData;
     plannedDays: Record<string, PlanStatus>;
     togglePlannedDay: (date: string) => void;
@@ -127,7 +127,7 @@ export const StudyProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         });
     };
 
-    const importStudyData = useCallback((newData: Partial<StudyData>) => {
+    const importStudyData = useCallback((newData: Partial<StudyData>, onSuccess?: () => void) => {
         setConfirmationState({
             isOpen: true,
             title: t('settings.dataManagement.confirmImportTitle'),
@@ -144,6 +144,7 @@ export const StudyProvider: React.FC<{ children: React.ReactNode }> = ({ childre
                 };
                 setData(mergedData);
                 closeConfirmation();
+                onSuccess?.();
             }
         });
     }, [setData, setConfirmationState, closeConfirmation, t]);

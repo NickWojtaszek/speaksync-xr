@@ -132,6 +132,12 @@
     "importTemplatesError": "Błąd importu szablonów. Sprawdź format pliku.",
     "exportTemplatesSuccess": "Szablony zostały pomyślnie wyeksportowane.",
     "exportNoTemplates": "Brak szablonów do wyeksportowania.",
+    "dataManagement": {
+      "confirmImportTitle": "Importuj dane planera",
+      "confirmImportMessage": "To zastąpi Twoje istniejące badania, raporty i dane planera. Czy na pewno chcesz kontynuować?",
+      "importSuccess": "Dane planera zaimportowane pomyślnie!",
+      "importError": "Błąd importu danych planera. Nieprawidłowy format pliku."
+    },
     "customCommandsTitle": "Niestandardowe komendy",
     "customCommandsDesc": "Zdefiniuj mówione komendy, które zostaną zastąpione tekstem. Idealne dla skrótów, symboli lub trudnych słów.",
     "spokenCommandPlaceholder": "Mówiona komenda (np. nowy akapit)",

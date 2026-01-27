@@ -10,6 +10,7 @@ import { useTemplate } from '../context/TemplateContext';
 import { useStudy } from '../context/StudyContext';
 import { useTheme } from '../context/ThemeContext';
 import StyleTrainingManager from '../components/StyleTrainingManager';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 const Slider: React.FC<{
   label: string;
@@ -74,7 +75,7 @@ const ToggleSwitch: React.FC<{
 
 const SettingsPage: React.FC = () => {
   const { currentUser, logout, updateUserPin } = usePINAuth();
-  const { setView, setConfirmationState, closeConfirmation } = useApp();
+  const { setView, setConfirmationState, closeConfirmation, confirmationState } = useApp();
   const { currentTheme } = useTheme();
   const {
       customCommands, setCustomCommands, aiPromptConfig, setAiPromptConfig, colorSettings, setColorSettings,
@@ -674,6 +675,13 @@ const SettingsPage: React.FC = () => {
             )}
         </div>
       </div>
+      <ConfirmationModal
+        isOpen={confirmationState.isOpen}
+        title={confirmationState.title}
+        message={confirmationState.message}
+        onConfirm={confirmationState.onConfirm}
+        onClose={closeConfirmation}
+      />
     </main>
   );
 };

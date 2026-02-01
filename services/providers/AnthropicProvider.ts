@@ -87,8 +87,10 @@ export class AnthropicProvider implements AIProvider {
       return await this.makeRequest(prompt, `---RAPORT---\n${text}`, 0.7);
     } catch (error) {
       console.error('Error enhancing report with Anthropic:', error);
+      if (error instanceof AIProviderError) throw error;
+      const detail = error instanceof Error ? error.message : String(error);
       throw new AIProviderError(
-        'Failed to enhance report',
+        `Anthropic: ${detail}`,
         'Anthropic',
         error instanceof Error ? error : undefined
       );

@@ -12,7 +12,7 @@ export class GeminiProvider implements AIProvider {
   private ai: GoogleGenAI;
   private model: string;
 
-  constructor(apiKey: string, model: string = 'gemini-2.0-flash-exp') {
+  constructor(apiKey: string, model: string = 'gemini-2.0-flash') {
     if (!apiKey) {
       throw new AIProviderError('API key is required', 'Gemini');
     }
@@ -35,8 +35,9 @@ export class GeminiProvider implements AIProvider {
       return result.text;
     } catch (error) {
       console.error('Error enhancing report with Gemini:', error);
+      const detail = error instanceof Error ? error.message : String(error);
       throw new AIProviderError(
-        'Failed to enhance report',
+        `Gemini: ${detail}`,
         'Gemini',
         error instanceof Error ? error : undefined
       );

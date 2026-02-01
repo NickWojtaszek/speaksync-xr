@@ -87,8 +87,10 @@ export class OpenAIProvider implements AIProvider {
       return await this.makeRequest(messages, 0.7);
     } catch (error) {
       console.error('Error enhancing report with OpenAI:', error);
+      if (error instanceof AIProviderError) throw error;
+      const detail = error instanceof Error ? error.message : String(error);
       throw new AIProviderError(
-        'Failed to enhance report',
+        `OpenAI: ${detail}`,
         'OpenAI',
         error instanceof Error ? error : undefined
       );

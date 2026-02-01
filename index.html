@@ -118,19 +118,34 @@
               background: white !important;
               color: black !important;
           }
-          /* Hide all elements by default */
+          /* Hide all elements by default (visibility allows children to override) */
           body * {
-              display: none;
+              visibility: hidden;
           }
           /* Show only the printable area and its contents */
           .printable-area, .printable-area * {
-              display: block !important;
+              visibility: visible !important;
           }
           .printable-area {
               position: absolute;
               left: 0;
               top: 0;
               width: 100%;
+          }
+          .printable-area table {
+              display: table !important;
+          }
+          .printable-area tr {
+              display: table-row !important;
+          }
+          .printable-area td, .printable-area th {
+              display: table-cell !important;
+          }
+          .printable-area thead {
+              display: table-header-group !important;
+          }
+          .printable-area tbody {
+              display: table-body-group !important;
           }
           .page-break {
               page-break-before: always;

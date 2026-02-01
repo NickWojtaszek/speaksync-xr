@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import type { PersonalInfo } from '../../../types';
 import { useTranslations } from '../../../context/LanguageContext';
 import { useTheme } from '../../../context/ThemeContext';
-import { ChevronDownIcon, CheckIcon } from '../../Icons';
+import { ChevronDownIcon, CheckIcon, TrashIcon } from '../../Icons';
 
 // Validation schema for PersonalInfo
 const createPersonalInfoSchema = () => z.object({
@@ -34,6 +34,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ personalInfo, onSav
     const { currentTheme } = useTheme();
     const [isCollapsed, setIsCollapsed] = useState(true);
     const [saved, setSaved] = useState(false);
+    const signatureInputRef = useRef<HTMLInputElement>(null);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Partial<PersonalInfo>>({
         resolver: zodResolver(createPersonalInfoSchema()),
@@ -98,6 +99,54 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ personalInfo, onSav
                             </div>
                         ))}
                     </div>
+                    {/* Signature Image Upload */}
+                    <div className="mt-6 pt-4" style={{ borderTopColor: currentTheme.colors.borderColor, borderTopWidth: '1px' }}>
+                        <label className="block text-xs font-medium mb-2" style={{ color: currentTheme.colors.textSecondary }}>
+                            {t('studyManager.reports.signatureImage') || 'Signature Image (for invoice)'}
+                        </label>
+                        {personalInfo.signatureImage ? (
+                            <div className="flex items-start gap-4">
+                                <div className="p-2 rounded-md" style={{ backgroundColor: '#fff', border: '1px solid #ccc' }}>
+                                    <img src={personalInfo.signatureImage} alt="Signature" style={{ maxHeight: '80px', maxWidth: '250px' }} />
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => onSave({ ...personalInfo, signatureImage: '' })}
+                                    className="p-2 rounded-full transition-colors hover:bg-red-500/20"
+                                    style={{ color: '#ef4444' }}
+                                >
+                                    <TrashIcon className="h-5 w-5" />
+                                </button>
+                            </div>
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={() => signatureInputRef.current?.click()}
+                                className="px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                                style={{ backgroundColor: currentTheme.colors.bgPrimary, borderColor: currentTheme.colors.borderColor, borderWidth: '1px', color: currentTheme.colors.textSecondary }}
+                            >
+                                {t('studyManager.reports.uploadSignature') || 'Upload Signature Image'}
+                            </button>
+                        )}
+                        <input
+                            ref={signatureInputRef}
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (!file) return;
+                                const reader = new FileReader();
+                                reader.onload = (ev) => {
+                                    const dataUrl = ev.target?.result as string;
+                                    onSave({ ...personalInfo, signatureImage: dataUrl });
+                                };
+                                reader.readAsDataURL(file);
+                                e.target.value = '';
+                            }}
+                        />
+                    </div>
+
                     <div className="mt-6 flex justify-end items-center gap-4">
                          {saved && <span className="text-sm flex items-center gap-1 animate-fade-in" style={{ color: currentTheme.colors.accentSuccess }}><CheckIcon/> {t('studyManager.reports.infoSaved')}</span>}
                          <button type="submit" className="px-4 py-2 rounded-md font-semibold transition-colors text-white" style={{ backgroundColor: currentTheme.colors.buttonPrimary }}>{t('studyManager.reports.saveInfo')}</button>

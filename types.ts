@@ -151,6 +151,7 @@ export interface PersonalInfo {
     department: string;
     specialty: string;
     licenseNumber: string;
+    signatureImage: string;
 }
 
 export interface ColorSettings {

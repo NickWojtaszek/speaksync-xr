@@ -104,6 +104,11 @@ const Invoice: React.FC<InvoiceProps> = ({ reportData, personalInfo, reportDate 
             </div>
 
             <div style={{ marginTop: '80px', textAlign: 'center' }}>
+                {personalInfo.signatureImage && (
+                    <div style={{ marginBottom: '10px' }}>
+                        <img src={personalInfo.signatureImage} alt="Podpis" style={{ maxHeight: '120px', maxWidth: '300px', margin: '0 auto', display: 'block' }} />
+                    </div>
+                )}
                 <div style={{ display: 'inline-block', border: '1px solid #000', padding: '10px 20px' }}>
                     <p><strong>{personalInfo.fullName}</strong></p>
                     <p><strong>{personalInfo.specialty}</strong></p>
@@ -111,7 +116,7 @@ const Invoice: React.FC<InvoiceProps> = ({ reportData, personalInfo, reportDate 
                 </div>
             </div>
 
-            <div style={{ marginTop: '100px' }}>
+            <div style={{ marginTop: personalInfo.signatureImage ? '40px' : '100px' }}>
                 <div style={{ borderBottom: '1px dotted #000', width: '300px', margin: '0 auto' }}></div>
                 <p style={{ textAlign: 'center', marginTop: '10px' }}>(czytelny podpis Zleceniobiorcy)</p>
             </div>

@@ -206,7 +206,11 @@ const ReportSubmissionPage: React.FC = () => {
   const handlePrint = () => {
     // Get the printable content
     const printContent = document.querySelector('.printable-area');
-    if (!printContent) return;
+    if (!printContent) {
+      console.error('Print failed: .printable-area element not found');
+      alert('Cannot print: Report content not found. Please try generating the report again.');
+      return;
+    }
 
     // Create a new window
     const printWindow = window.open('', '_blank', 'width=800,height=600');
@@ -438,29 +442,31 @@ const ReportSubmissionPage: React.FC = () => {
             {/* Report Content */}
             <div
               style={{ backgroundColor: currentTheme.colors.bgTertiary }}
-              className="border border-gray-700 rounded-lg p-6 mb-6 max-h-96 overflow-y-auto"
+              className="border border-gray-700 rounded-lg mb-6"
             >
-              {activeView === 'specification' && (
-                <Specification
-                  reportData={transformedReportData}
-                  personalInfo={selectedSubmittedReport.personalInfo}
-                  date={{ year: selectedSubmittedReport.year, month: selectedSubmittedReport.month - 1 }}
-                />
-              )}
-              {activeView === 'invoice' && (
-                <Invoice
-                  reportData={transformedReportData}
-                  personalInfo={selectedSubmittedReport.personalInfo}
-                  date={{ year: selectedSubmittedReport.year, month: selectedSubmittedReport.month - 1 }}
-                />
-              )}
-              {activeView === 'summary' && (
-                <Summary
-                  reportData={transformedReportData}
-                  personalInfo={selectedSubmittedReport.personalInfo}
-                  date={{ year: selectedSubmittedReport.year, month: selectedSubmittedReport.month - 1 }}
-                />
-              )}
+              <div className="printable-area p-6 bg-white text-black">
+                {activeView === 'specification' && (
+                  <Specification
+                    reportData={transformedReportData}
+                    personalInfo={selectedSubmittedReport.personalInfo}
+                    date={{ year: selectedSubmittedReport.year, month: selectedSubmittedReport.month - 1 }}
+                  />
+                )}
+                {activeView === 'invoice' && (
+                  <Invoice
+                    reportData={transformedReportData}
+                    personalInfo={selectedSubmittedReport.personalInfo}
+                    date={{ year: selectedSubmittedReport.year, month: selectedSubmittedReport.month - 1 }}
+                  />
+                )}
+                {activeView === 'summary' && (
+                  <Summary
+                    reportData={transformedReportData}
+                    personalInfo={selectedSubmittedReport.personalInfo}
+                    date={{ year: selectedSubmittedReport.year, month: selectedSubmittedReport.month - 1 }}
+                  />
+                )}
+              </div>
             </div>
 
             {/* Action Buttons */}
@@ -610,29 +616,31 @@ const ReportSubmissionPage: React.FC = () => {
                 {/* Report Content */}
                 <div
                   style={{ backgroundColor: currentTheme.colors.bgTertiary }}
-                  className="border border-gray-700 rounded-lg p-6 mb-6 max-h-96 overflow-y-auto"
+                  className="border border-gray-700 rounded-lg mb-6"
                 >
-                  {activeView === 'specification' && (
-                    <Specification
-                      reportData={reportData}
-                      personalInfo={personalInfo}
-                      date={{ year: selectedYear, month: selectedMonth }}
-                    />
-                  )}
-                  {activeView === 'invoice' && (
-                    <Invoice
-                      reportData={reportData}
-                      personalInfo={personalInfo}
-                      date={{ year: selectedYear, month: selectedMonth }}
-                    />
-                  )}
-                  {activeView === 'summary' && (
-                    <Summary
-                      reportData={reportData}
-                      personalInfo={personalInfo}
-                      date={{ year: selectedYear, month: selectedMonth }}
-                    />
-                  )}
+                  <div className="printable-area p-6 bg-white text-black">
+                    {activeView === 'specification' && (
+                      <Specification
+                        reportData={reportData}
+                        personalInfo={personalInfo}
+                        date={{ year: selectedYear, month: selectedMonth }}
+                      />
+                    )}
+                    {activeView === 'invoice' && (
+                      <Invoice
+                        reportData={reportData}
+                        personalInfo={personalInfo}
+                        date={{ year: selectedYear, month: selectedMonth }}
+                      />
+                    )}
+                    {activeView === 'summary' && (
+                      <Summary
+                        reportData={reportData}
+                        personalInfo={personalInfo}
+                        date={{ year: selectedYear, month: selectedMonth }}
+                      />
+                    )}
+                  </div>
                 </div>
                 {/* Action Buttons */}
                 <div className="flex gap-3">

@@ -82,7 +82,11 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({ studies, personalInfo
     const handlePrint = () => {
         // Get the printable content
         const printContent = document.querySelector('.printable-area');
-        if (!printContent) return;
+        if (!printContent) {
+            console.error('Print failed: .printable-area element not found');
+            alert('Cannot print: Report content not found. Please try generating the report again.');
+            return;
+        }
 
         // Create a new window
         const printWindow = window.open('', '_blank', 'width=800,height=600');

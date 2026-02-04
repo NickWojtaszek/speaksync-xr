@@ -63,6 +63,10 @@ const Invoice: React.FC<InvoiceProps> = ({ reportData, personalInfo, reportDate 
     const year = safeDate.getFullYear();
     const today = new Date().toLocaleDateString('pl-PL');
 
+    const nameParts = personalInfo.fullName?.trim().split(' ') || [];
+    const lastName = nameParts.length > 0 ? nameParts[nameParts.length - 1] : '';
+    const firstName = nameParts.length > 1 ? nameParts.slice(0, -1).join(' ') : '';
+
     return (
         <div style={{ fontFamily: 'Arial, sans-serif', fontSize: '12pt', lineHeight: 1.5 }}>
             <div style={{ textAlign: 'right', marginBottom: '30px' }}>
@@ -70,37 +74,32 @@ const Invoice: React.FC<InvoiceProps> = ({ reportData, personalInfo, reportDate 
             </div>
              <div style={{ margin: '20px 0', lineHeight: 2 }}>
                 <ul style={{ listStyle: 'none', padding: 0 }}>
-                    <li>• NAZWISKO: <strong>{personalInfo.fullName?.split(' ')[1]?.toUpperCase()}</strong></li>
-                    <li>• IMIĘ (imiona): <strong>{personalInfo.fullName?.split(' ')[0]?.toUpperCase()}</strong></li>
-                    <li>• NR PESEL: <strong>{personalInfo.pesel}</strong></li>
-                    <li>• Miejscowość (kod pocztowy): <strong>{personalInfo.addressCity}</strong></li>
-                    <li>• Ulica (nr domu i mieszkania): <strong>{personalInfo.addressStreet}</strong></li>
-                    <li>• Województwo/gmina/dzielnica: <strong>{personalInfo.addressProvince}</strong></li>
-                    <li>• Adres mailowy: <strong>{personalInfo.email}</strong></li>
-                    <li>• Nr telefonu: <strong>{personalInfo.phone}</strong></li>
-                    <li>• Urząd Skarbowy: <strong>{personalInfo.taxOffice}</strong></li>
+                    <li>• <strong>NAZWISKO:</strong> {lastName}</li>
+                    <li>• <strong>IMIĘ (imiona):</strong> {firstName}</li>
+                    <li>• <strong>NR PESEL:</strong> {personalInfo.pesel}</li>
+                    <li>• <strong>Miejscowość (kod pocztowy):</strong> {personalInfo.addressCity}</li>
+                    <li>• <strong>Ulica (nr domu i mieszkania):</strong> {personalInfo.addressStreet}</li>
+                    <li>• <strong>Województwo/gmina/dzielnica:</strong> {personalInfo.addressProvince}</li>
+                    <li>• <strong>Adres mailowy:</strong> {personalInfo.email}</li>
+                    <li>• <strong>Nr telefonu:</strong> {personalInfo.phone}</li>
+                    <li>• <strong>Urząd Skarbowy:</strong> {personalInfo.taxOffice}</li>
                 </ul>
             </div>
 
-            <div style={{ fontWeight: 'bold', margin: '30px 0', fontSize: '14pt' }}>
-                RACHUNEK DO UMOWY ZLECENIA nr {personalInfo.contractNumber}
+            <div style={{ fontWeight: 'bold', margin: '30px 0', fontSize: '14pt', textAlign: 'center' }}>
+                <p>RACHUNEK DO UMOWY ZLECENIA nr {personalInfo.contractNumber}</p>
+                <p>MIESIĄC {monthName} {year}</p>
             </div>
 
              <div style={{ margin: '20px 0' }}>
-                <p><strong>MIESIĄC {monthName} ROK {year}</strong></p>
-                <p style={{ marginTop: '10px' }}>dla UCK WUM, ul. Banacha 1a, 02-097 Warszawa,</p>
+                <p>dla UCK WUM, ul. Banacha 1a, 02-097 Warszawa,</p>
                 <p style={{ marginTop: '10px' }}>za wykonywanie zadań:</p>
                 <p><strong>{personalInfo.specialty?.toUpperCase()}</strong></p>
             </div>
 
-            <div style={{ margin: '30px 0', padding: '15px', background: '#f9f9f9', border: '1px solid #ddd' }}>
-                 <p style={{ fontSize: '14pt', fontWeight: 'bold' }}>Kwota złotych: {reportData.totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} zł brutto</p>
-                 <p style={{ marginTop: '10px' }}>(słownie złotych: {amountToWords(reportData.totalAmount)})</p>
-            </div>
-
             <div style={{ margin: '30px 0' }}>
-                <p>Wynagrodzenie proszę wypłacić przelewem na rachunek bankowy nr:</p>
-                <p style={{ fontSize: '14pt', fontWeight: 'bold', marginTop: '10px' }}>{personalInfo.bankAccount}</p>
+                 <p><strong>Kwota złotych {reportData.totalAmount.toLocaleString('pl-PL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} zł brutto</strong></p>
+                 <p>(słownie złotych: {amountToWords(reportData.totalAmount)})</p>
             </div>
 
             <div style={{ marginTop: '80px', textAlign: 'center' }}>
@@ -109,16 +108,14 @@ const Invoice: React.FC<InvoiceProps> = ({ reportData, personalInfo, reportDate 
                         <img src={personalInfo.signatureImage} alt="Podpis" style={{ maxHeight: '120px', maxWidth: '300px', margin: '0 auto', display: 'block' }} />
                     </div>
                 )}
-                <div style={{ display: 'inline-block', border: '1px solid #000', padding: '10px 20px' }}>
-                    <p><strong>{personalInfo.fullName}</strong></p>
-                    <p><strong>{personalInfo.specialty}</strong></p>
-                    <p>{personalInfo.licenseNumber}</p>
-                </div>
+                <p>{personalInfo.fullName}</p>
+                <p>{personalInfo.specialty?.toUpperCase()}</p>
+                <p>{personalInfo.licenseNumber}</p>
             </div>
 
-            <div style={{ marginTop: personalInfo.signatureImage ? '40px' : '100px' }}>
-                <div style={{ borderBottom: '1px dotted #000', width: '300px', margin: '0 auto' }}></div>
-                <p style={{ textAlign: 'center', marginTop: '10px' }}>(czytelny podpis Zleceniobiorcy)</p>
+            <div style={{ margin: '30px 0' }}>
+                <p>Wynagrodzenie proszę wypłacić przelewem na rachunek bankowy nr:</p>
+                <p style={{ fontSize: '14pt', fontWeight: 'bold', marginTop: '10px' }}>{personalInfo.bankAccount}</p>
             </div>
         </div>
     );

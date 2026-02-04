@@ -79,7 +79,59 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({ studies, personalInfo
         });
     };
 
-    const handlePrint = () => window.print();
+    const handlePrint = () => {
+        // Get the printable content
+        const printContent = document.querySelector('.printable-area');
+        if (!printContent) return;
+
+        // Create a new window
+        const printWindow = window.open('', '_blank', 'width=800,height=600');
+        if (!printWindow) return;
+
+        // Write HTML to the new window
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>Print</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 20px;
+                        background: white;
+                        color: black;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    table, th, td {
+                        border: 1px solid black;
+                    }
+                    th, td {
+                        padding: 8px;
+                        text-align: left;
+                    }
+                    @media print {
+                        body { margin: 0; }
+                    }
+                </style>
+            </head>
+            <body>
+                ${printContent.innerHTML}
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+
+        // Wait for content to load, then print
+        printWindow.onload = () => {
+            printWindow.print();
+            // Close window after printing (optional)
+            setTimeout(() => printWindow.close(), 100);
+        };
+    };
 
     const handleExportCsv = () => {
         if (!reportData) return;

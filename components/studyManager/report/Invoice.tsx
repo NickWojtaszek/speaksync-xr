@@ -68,7 +68,7 @@ const Invoice: React.FC<InvoiceProps> = ({ reportData, personalInfo, reportDate 
     const firstName = nameParts.length > 1 ? nameParts.slice(0, -1).join(' ') : '';
 
     return (
-        <div style={{ fontFamily: 'Arial, sans-serif', fontSize: '12pt', lineHeight: 1.5 }}>
+        <div style={{ fontFamily: 'Arial, sans-serif', fontSize: '11pt', lineHeight: 1.5 }}>
             <div style={{ textAlign: 'right', marginBottom: '30px' }}>
                 <p>Warszawa, dnia {today}</p>
             </div>
@@ -103,14 +103,17 @@ const Invoice: React.FC<InvoiceProps> = ({ reportData, personalInfo, reportDate 
             </div>
 
             <div style={{ marginTop: '80px', textAlign: 'center' }}>
-                {personalInfo.signatureImage && (
-                    <div style={{ marginBottom: '10px' }}>
+                {personalInfo.signatureImage ? (
+                    <div>
                         <img src={personalInfo.signatureImage} alt="Podpis" style={{ maxHeight: '120px', maxWidth: '300px', margin: '0 auto', display: 'block' }} />
                     </div>
+                ) : (
+                    <>
+                        <p>{personalInfo.fullName}</p>
+                        <p>{personalInfo.specialty?.toUpperCase()}</p>
+                        <p>{personalInfo.licenseNumber}</p>
+                    </>
                 )}
-                <p>{personalInfo.fullName}</p>
-                <p>{personalInfo.specialty?.toUpperCase()}</p>
-                <p>{personalInfo.licenseNumber}</p>
             </div>
 
             <div style={{ margin: '30px 0' }}>

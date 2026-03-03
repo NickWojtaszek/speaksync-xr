@@ -625,21 +625,20 @@ const ReportSubmissionPage: React.FC = () => {
                       <Specification
                         reportData={reportData}
                         personalInfo={personalInfo}
-                        date={{ year: selectedYear, month: selectedMonth }}
+                        reportDate={new Date(selectedYear, selectedMonth)}
                       />
                     )}
                     {activeView === 'invoice' && (
                       <Invoice
                         reportData={reportData}
                         personalInfo={personalInfo}
-                        date={{ year: selectedYear, month: selectedMonth }}
+                        reportDate={new Date(selectedYear, selectedMonth)}
                       />
                     )}
                     {activeView === 'summary' && (
                       <Summary
                         reportData={reportData}
-                        personalInfo={personalInfo}
-                        date={{ year: selectedYear, month: selectedMonth }}
+                        reportDate={new Date(selectedYear, selectedMonth)}
                       />
                     )}
                   </div>

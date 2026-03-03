@@ -43,8 +43,10 @@ const FinancialReportGenerator: React.FC = () => {
   const { verificationRecords, getApprovedReportsForAccounting, getAccountingRecord } = useReport();
 
   const [dateRange, setDateRange] = useState<DateRangeType>('month');
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const prevMonth = new Date();
+  prevMonth.setMonth(prevMonth.getMonth() - 1);
+  const [selectedMonth, setSelectedMonth] = useState(prevMonth.getMonth());
+  const [selectedYear, setSelectedYear] = useState(prevMonth.getFullYear());
   const [customStartDate, setCustomStartDate] = useState('');
   const [customEndDate, setCustomEndDate] = useState('');
   const [viewModes, setViewModes] = useState<ViewMode[]>(['summary', 'byUser', 'byCode']);

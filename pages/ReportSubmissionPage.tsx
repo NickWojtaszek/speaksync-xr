@@ -51,8 +51,10 @@ const ReportSubmissionPage: React.FC = () => {
   const validStudies = Array.isArray(contextStudies) ? contextStudies : [];
   const validCodes = Array.isArray(codes) ? codes : [];
 
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const prevMonth = new Date();
+  prevMonth.setMonth(prevMonth.getMonth() - 1);
+  const [selectedYear, setSelectedYear] = useState(prevMonth.getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(prevMonth.getMonth());
   const [reportData, setReportData] = useState<ReportData | null>(null);
   const [activeView, setActiveView] = useState<ReportView>('specification');
   const [isSubmissionModalOpen, setIsSubmissionModalOpen] = useState(false);

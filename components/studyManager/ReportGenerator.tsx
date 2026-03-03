@@ -34,7 +34,9 @@ export interface ReportData {
 const ReportGenerator: React.FC<ReportGeneratorProps> = ({ studies, personalInfo, onPersonalInfoChange, codes, generatedReports, onAddGeneratedReport, onDeleteGeneratedReport }) => {
     const { t } = useTranslations();
     const { currentTheme } = useTheme();
-    const [date, setDate] = useState({ year: new Date().getFullYear(), month: new Date().getMonth() });
+    const prevMonth = new Date();
+    prevMonth.setMonth(prevMonth.getMonth() - 1);
+    const [date, setDate] = useState({ year: prevMonth.getFullYear(), month: prevMonth.getMonth() });
     const [reportData, setReportData] = useState<ReportData | null>(null);
     const [activeView, setActiveView] = useState<ReportView>('specification');
 

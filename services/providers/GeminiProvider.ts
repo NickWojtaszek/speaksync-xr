@@ -16,7 +16,7 @@ export class GeminiProvider implements AIProvider {
   constructor(apiKey?: string, model?: string) {
     const key = apiKey || DEFAULT_GEMINI_API_KEY;
     this.ai = new GoogleGenAI({ apiKey: key });
-    this.model = model || GEMINI_FLASH_MODEL;
+    this.model = (model && !model.endsWith('-exp')) ? model : GEMINI_FLASH_MODEL;
   }
 
   async enhanceReport(

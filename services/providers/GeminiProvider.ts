@@ -7,17 +7,16 @@ import { generatePrompt } from '../../data/promptData';
 import { AIProvider, AIProviderError } from './AIProvider';
 import type { AIPromptConfig, GrammarError, StyleExample } from '../../types';
 import type { Language } from '../../context/LanguageContext';
+import { DEFAULT_GEMINI_API_KEY, GEMINI_FLASH_MODEL } from '../../constants';
 
 export class GeminiProvider implements AIProvider {
   private ai: GoogleGenAI;
   private model: string;
 
-  constructor(apiKey: string, model: string = 'gemini-2.0-flash') {
-    if (!apiKey) {
-      throw new AIProviderError('API key is required', 'Gemini');
-    }
-    this.ai = new GoogleGenAI({ apiKey });
-    this.model = model;
+  constructor(apiKey?: string, model?: string) {
+    const key = apiKey || DEFAULT_GEMINI_API_KEY;
+    this.ai = new GoogleGenAI({ apiKey: key });
+    this.model = model || GEMINI_FLASH_MODEL;
   }
 
   async enhanceReport(

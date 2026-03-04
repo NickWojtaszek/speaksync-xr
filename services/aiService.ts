@@ -64,8 +64,8 @@ function getActiveProvider(aiSettings: AISettings): AIProvider {
     );
   }
 
-  // Validate provider has API key (except for local which might not need it)
-  if (providerConfig.type !== 'local' && !providerConfig.apiKey) {
+  // Validate provider has API key (except for local/gemini which have fallbacks)
+  if (providerConfig.type !== 'local' && providerConfig.type !== 'gemini' && !providerConfig.apiKey) {
     throw new AIProviderError(
       `Provider "${providerConfig.name}" is missing an API key. Please configure it in Settings > AI Configuration.`,
       providerConfig.name

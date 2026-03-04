@@ -45,8 +45,15 @@ const initialSettingsData: SettingsData = {
     colorSettings: { voice: '#86efac', pasted: '#93c5fd', dragged: '#fde047' },
     aiPromptConfig: initialAIPromptConfigs,
     aiSettings: {
-        providers: [],
-        defaultProvider: '',
+        providers: [{
+            id: 'gemini-default',
+            name: 'Google Gemini',
+            type: 'gemini' as const,
+            apiKey: '',
+            model: 'gemini-2.0-flash',
+            enabled: true
+        }],
+        defaultProvider: 'gemini-default',
         promptConfig: initialAIPromptConfigs['en']
     },
     layoutDensity: 'comfortable',

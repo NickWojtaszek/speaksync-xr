@@ -35,12 +35,9 @@ function createProvider(config: AIProviderConfig): AIProvider {
  * Get the active provider from settings
  */
 function getActiveProvider(aiSettings: AISettings): AIProvider {
-  // No providers configured
+  // No providers configured - fall back to default Gemini provider
   if (!aiSettings.providers || aiSettings.providers.length === 0) {
-    throw new AIProviderError(
-      'No AI providers configured. Please configure at least one provider in Settings > AI Configuration.',
-      'None'
-    );
+    return new GeminiProvider();
   }
 
   // Find default provider if specified
